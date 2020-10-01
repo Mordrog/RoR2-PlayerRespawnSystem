@@ -2,7 +2,7 @@
     "name": "PlayerRespawnSystem",
     "version_number": "1.0.0",
     "website_url": "https://github.com/Mordrog/RoR2-PlayerRespawnSystem",
-    "description": "The mod should provide customizable players respawn system for your games."
+    "description": "The mod should provide customizable players respawn system for your games.",
     "dependencies": [
         "bbepis-BepInExPack-1.3.1"
     ]
