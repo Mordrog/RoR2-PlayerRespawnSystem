@@ -1,4 +1,7 @@
 ﻿using BepInEx;
+using R2API;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Mordrog
 {
@@ -10,6 +13,11 @@ namespace Mordrog
         public const string ModName = "PlayerRespawnSystem";
         public const string ModGuid = "com.Mordrog.PlayerRespawnSystem";
 
+        private UsersRespawnController usersRespawnController;
+
+        private static GameObject DeathTimerControllerPrefab;
+        private GameObject deathTimerController;
+
         public PlayerRespawnSystemPlugin()
         {
             InitConfig();
@@ -17,7 +25,56 @@ namespace Mordrog
 
         public void Awake()
         {
-            base.gameObject.AddComponent<UsersRespawnController>();
+            //Create prefab
+            var temp = new GameObject("temp");
+            temp.AddComponent<NetworkIdentity>();
+            DeathTimerControllerPrefab = temp.InstantiateClone("DeathTimerController");
+            Destroy(temp);
+            DeathTimerControllerPrefab.AddComponent<DeathTimerController>();
+
+            On.RoR2.NetworkUser.OnEnable += NetworkUser_OnEnable;
+            On.RoR2.Run.Awake += Run_Awake;
+            On.RoR2.Run.OnDestroy += Run_OnDestroy;
+        }
+
+        private void NetworkUser_OnEnable(On.RoR2.NetworkUser.orig_OnEnable orig, RoR2.NetworkUser self)
+        {
+            orig(self);
+
+            if (!deathTimerController)
+            {
+                deathTimerController = Instantiate(DeathTimerControllerPrefab);
+                deathTimerController.transform.SetParent(self.transform, false);
+            }
+        }
+
+        private void Run_Awake(On.RoR2.Run.orig_Awake orig, RoR2.Run self)
+        {
+            orig(self);
+
+            deathTimerController.SetActive(true);
+
+            if (NetworkServer.active)
+            {
+                usersRespawnController = base.gameObject.AddComponent<UsersRespawnController>();
+                NetworkServer.Spawn(deathTimerController);
+            }
+        }
+
+        private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, RoR2.Run self)
+        {
+            orig(self);
+
+            if (deathTimerController)
+                deathTimerController.SetActive(false);
+
+            if (NetworkServer.active)
+            {
+                Destroy(usersRespawnController);
+
+                if (deathTimerController)
+                    NetworkServer.UnSpawn(deathTimerController);
+            }
         }
 
         private void InitConfig()
@@ -69,6 +126,13 @@ namespace Mordrog
                 "UsePodsOnStartOfMatch",
                 false,
                 "Should players spawn from pods on start of match."
+            );
+
+            PluginConfig.UseDeathTimerUI = Config.Bind<bool>(
+                "Settings",
+                "UseDeathTimerUI",
+                true,
+                "Should UI death timer show up for you on death."
             );
 
             PluginConfig.UseTimedRespawn = Config.Bind<bool>(

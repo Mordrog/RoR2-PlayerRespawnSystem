@@ -18,6 +18,7 @@ namespace Mordrog
 
         public static ConfigEntry<bool>
             UsePodsOnStartOfMatch,
+            UseDeathTimerUI,
             UseTimedRespawn,
             BlockTimedRespawnOnTPEvent,
             RespawnOnTPStart,
