@@ -17,6 +17,7 @@ namespace Mordrog
             UpdateCurrentRepsawnTimeByXSeconds;
 
         public static ConfigEntry<bool>
+            UsePodsOnStartOfMatch,
             UseTimedRespawn,
             BlockTimedRespawnOnTPEvent,
             RespawnOnTPStart,

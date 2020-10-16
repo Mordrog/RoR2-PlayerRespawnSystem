@@ -64,6 +64,13 @@ namespace Mordrog
                 "Time interval between updates of the UpdateCurrentRepsawnTimeByXSeconds."
             );
 
+            PluginConfig.UsePodsOnStartOfMatch = Config.Bind<bool>(
+                "Settings",
+                "UsePodsOnStartOfMatch",
+                false,
+                "Should players spawn from pods on start of match."
+            );
+
             PluginConfig.UseTimedRespawn = Config.Bind<bool>(
                 "Settings",
                 "UseTimedRespawn",

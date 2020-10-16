@@ -41,7 +41,7 @@ namespace Mordrog
 
             On.RoR2.PlayerCharacterMasterController.OnBodyDeath += PlayerCharacterMasterController_OnBodyDeath;
             On.RoR2.SceneExitController.SetState += SceneExitController_SetState;
-            On.RoR2.Stage.Start += Stage_Start;
+            On.RoR2.Stage.OnEnable += Stage_OnEnable;
             On.RoR2.Stage.BeginAdvanceStage += Stage_BeginAdvanceStage;
             On.RoR2.Stage.RespawnCharacter += Stage_RespawnCharacter;
             On.RoR2.Stage.GetPlayerSpawnTransform += Stage_GetPlayerSpawnTransform;
@@ -63,6 +63,7 @@ namespace Mordrog
         {
             On.RoR2.PlayerCharacterMasterController.OnBodyDeath -= PlayerCharacterMasterController_OnBodyDeath;
             On.RoR2.SceneExitController.SetState -= SceneExitController_SetState;
+            On.RoR2.Stage.OnEnable -= Stage_OnEnable;
             On.RoR2.Stage.BeginAdvanceStage -= Stage_BeginAdvanceStage;
             On.RoR2.Stage.RespawnCharacter -= Stage_RespawnCharacter;
             On.RoR2.Stage.GetPlayerSpawnTransform -= Stage_GetPlayerSpawnTransform;
@@ -78,6 +79,8 @@ namespace Mordrog
         private void PlayerCharacterMasterController_OnBodyDeath(On.RoR2.PlayerCharacterMasterController.orig_OnBodyDeath orig, PlayerCharacterMasterController self)
         {
             orig(self);
+
+            Stage.instance.usePod = false;
 
             var user = UsersHelper.GetUser(self.master);
 
@@ -118,11 +121,14 @@ namespace Mordrog
             }
         }
 
-        private void Stage_Start(On.RoR2.Stage.orig_Start orig, Stage self)
+        private void Stage_OnEnable(On.RoR2.Stage.orig_OnEnable orig, Stage self)
         {
             orig(self);
 
-            Stage.instance.usePod = false;
+            if (!PluginConfig.UsePodsOnStartOfMatch.Value)
+            {
+                Stage.instance.usePod = false;
+            }
         }
 
         private void Stage_BeginAdvanceStage(On.RoR2.Stage.orig_BeginAdvanceStage orig, Stage self, SceneDef destinationStage)
