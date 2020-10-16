@@ -5,71 +5,116 @@ using UnityEngine.Networking;
 
 namespace Mordrog
 {
+    public enum RespawnType : byte
+    {
+        Default,
+        Teleporter,
+        Mithrix,
+        Artifact
+    }
+
     class UsersRespawnController : NetworkBehaviour
     {
-        private UsersRespawnTimers usersRespawnTimers;
+        public UsersTimedRespawn usersTimedRespawn;
+        private UsersTeleporterRespawn usersTeleporterRespawn;
+        private UsersMithrixRespawn usersMithrixRespawn;
+        private UsersArtifactTrialRespawn usersArtifactTrialRespawn;
 
-        public bool blockRespawningOnTP = false;
-        public bool respawnNearTP = false;
+        private Queue<CharacterBody> respawnCharacterMaster = new Queue<CharacterBody>();
 
-        public Queue<CharacterBody> respawnCharacterMaster = new Queue<CharacterBody>();
+        public bool IsAdvancingStage { get; private set; }
+
+        public bool IsTimedRespawnBlocked { get; private set; }
+
+        public RespawnType RespawnType { get; set; } = RespawnType.Default;
+
+        public static UsersRespawnController instance { get; private set; }
 
         public void Awake()
         {
-            usersRespawnTimers = base.gameObject.AddComponent<UsersRespawnTimers>();
+            usersTimedRespawn = base.gameObject.AddComponent<UsersTimedRespawn>();
+            usersTeleporterRespawn = base.gameObject.AddComponent<UsersTeleporterRespawn>();
+            usersMithrixRespawn = base.gameObject.AddComponent<UsersMithrixRespawn>();
+            usersArtifactTrialRespawn = base.gameObject.AddComponent<UsersArtifactTrialRespawn>();
 
-            usersRespawnTimers.OnUserTimerRespawnTimerEnd += UsersRespawnTimers_OnUserTimerRespawnTimerEnd;
+            usersTimedRespawn.respawnController = usersTeleporterRespawn.respawnController = usersMithrixRespawn.respawnController = usersArtifactTrialRespawn.respawnController = this;
 
-            On.RoR2.TeleporterInteraction.ChargingState.OnEnter += TeleporterInteraction_ChargingState_OnEnter;
-            On.RoR2.TeleporterInteraction.ChargedState.OnEnter += TeleporterInteraction_ChargedState_OnEnter;
+            On.RoR2.PlayerCharacterMasterController.OnBodyDeath += PlayerCharacterMasterController_OnBodyDeath;
+            On.RoR2.SceneExitController.SetState += SceneExitController_SetState;
             On.RoR2.Stage.Start += Stage_Start;
             On.RoR2.Stage.BeginAdvanceStage += Stage_BeginAdvanceStage;
             On.RoR2.Stage.RespawnCharacter += Stage_RespawnCharacter;
             On.RoR2.Stage.GetPlayerSpawnTransform += Stage_GetPlayerSpawnTransform;
-            On.RoR2.PlayerCharacterMasterController.OnBodyDeath += PlayerCharacterMasterController_OnBodyDeath;
-            On.RoR2.Run.OnUserAdded += Run_OnUserAdded;
-            On.RoR2.Run.OnUserRemoved += Run_OnUserRemoved;
-            On.RoR2.Run.BeginGameOver += Run_BeginGameOver;
-            On.RoR2.Run.OnDestroy += Run_OnDestroy;
             On.RoR2.Run.OnServerSceneChanged += Run_OnServerSceneChanged;
+            On.RoR2.Run.OnDestroy += Run_OnDestroy;
         }
 
-        private void UsersRespawnTimers_OnUserTimerRespawnTimerEnd(NetworkUser user)
+        protected void OnEnable()
         {
-            if (CheckIfCanRespawn(user.master))
-            {
-                Stage.instance.RespawnCharacter(user.master);
-            }
+            UsersRespawnController.instance = SingletonHelper.Assign<UsersRespawnController>(UsersRespawnController.instance, this);
         }
 
-        private void TeleporterInteraction_ChargingState_OnEnter(On.RoR2.TeleporterInteraction.ChargingState.orig_OnEnter orig, EntityStates.BaseState self)
+        protected void OnDisable()
+        {
+            UsersRespawnController.instance = SingletonHelper.Unassign<UsersRespawnController>(UsersRespawnController.instance, this);
+        }
+
+        public void OnDestroy()
+        {
+            On.RoR2.PlayerCharacterMasterController.OnBodyDeath -= PlayerCharacterMasterController_OnBodyDeath;
+            On.RoR2.SceneExitController.SetState -= SceneExitController_SetState;
+            On.RoR2.Stage.BeginAdvanceStage -= Stage_BeginAdvanceStage;
+            On.RoR2.Stage.RespawnCharacter -= Stage_RespawnCharacter;
+            On.RoR2.Stage.GetPlayerSpawnTransform -= Stage_GetPlayerSpawnTransform;
+            On.RoR2.Run.OnServerSceneChanged -= Run_OnServerSceneChanged;
+            On.RoR2.Run.OnDestroy -= Run_OnDestroy;
+
+            Destroy(usersTimedRespawn);
+            Destroy(usersTeleporterRespawn);
+            Destroy(usersMithrixRespawn);
+            Destroy(usersArtifactTrialRespawn);
+        }
+
+        private void PlayerCharacterMasterController_OnBodyDeath(On.RoR2.PlayerCharacterMasterController.orig_OnBodyDeath orig, PlayerCharacterMasterController self)
         {
             orig(self);
 
-            respawnNearTP = true;
+            var user = UsersHelper.GetUser(self.master);
 
-            if (PluginConfig.RespawnOnTPStart.Value)
+            if (user)
             {
-                usersRespawnTimers.InstantRespawnAll();
-            }
-
-            if (PluginConfig.BlockRespawningOnTPEvent.Value)
-            {
-                usersRespawnTimers.StopAllCurrentRespawnTimers();
-                blockRespawningOnTP = true;
-                ChatHelper.RespawnBlockedOnTPEvent();
+                if (CheckIfCanTimedRespawn(self.master))
+                {
+                    usersTimedRespawn.StartTimedRespawn(user);
+                }
+                else if (IsTimedRespawnBlocked)
+                {
+                    switch(RespawnType)
+                    {
+                        case RespawnType.Teleporter:
+                            if (PluginConfig.RespawnOnTPEnd.Value)
+                                ChatHelper.UserWillRespawnAfterTPEvent(user.userName);
+                            break;
+                        case RespawnType.Mithrix:
+                            if (PluginConfig.RespawnOnMithrixEnd.Value)
+                                ChatHelper.UserWillRespawnAfterMithrixFight(user.userName);
+                            break;
+                        case RespawnType.Artifact:
+                            if (PluginConfig.RespawnOnArtifactTrialEnd.Value)
+                                ChatHelper.UserWillRespawnAfterArtifactTrial(user.userName);
+                            break;
+                    }
+                }
             }
         }
 
-        private void TeleporterInteraction_ChargedState_OnEnter(On.RoR2.TeleporterInteraction.ChargedState.orig_OnEnter orig, EntityStates.BaseState self)
+        private void SceneExitController_SetState(On.RoR2.SceneExitController.orig_SetState orig, SceneExitController self, SceneExitController.ExitState newState)
         {
-            orig(self);
+            orig(self, newState);
 
-            blockRespawningOnTP = false;
-
-            if (PluginConfig.RespawnOnTPEnd.Value)
+            if (newState == SceneExitController.ExitState.TeleportOut)
             {
-                usersRespawnTimers.InstantRespawnAll();
+                IsAdvancingStage = true;
             }
         }
 
@@ -84,8 +129,9 @@ namespace Mordrog
         {
             orig(self, destinationStage);
 
-            respawnNearTP = false;
-            usersRespawnTimers.StopAllCurrentRespawnTimers();
+            UnblockTimedRespawn();
+            RespawnType = RespawnType.Default;
+            usersTimedRespawn.ResetAllRespawnTimers();
         }
 
         private void Stage_RespawnCharacter(On.RoR2.Stage.orig_RespawnCharacter orig, Stage self, CharacterMaster characterMaster)
@@ -102,95 +148,99 @@ namespace Mordrog
 
         private Transform Stage_GetPlayerSpawnTransform(On.RoR2.Stage.orig_GetPlayerSpawnTransform orig, Stage self)
         {
-            if (respawnNearTP && respawnCharacterMaster.Count > 0)
-            {
-                var body = respawnCharacterMaster.Dequeue();
-                var spawnTransform = new GameObject().transform;
-                spawnTransform.position = TeleporterSpawnPosition.GetSpawnPositionAroundTeleporter(body, 3);
-
-                return spawnTransform;
-            }
-            else
+            if (respawnCharacterMaster.Count == 0)
             {
                 return orig(self);
             }
-        }
 
-        private void PlayerCharacterMasterController_OnBodyDeath(On.RoR2.PlayerCharacterMasterController.orig_OnBodyDeath orig, PlayerCharacterMasterController self)
-        {
-            orig(self);
+            var body = respawnCharacterMaster.Dequeue();
+            Transform spawnTransform;
 
-            var user = UsersHelper.GetUser(self.master);
-
-            if (user)
+            switch (RespawnType)
             {
-                if (CheckIfCanRespawn(self.master) && PluginConfig.UseTimeRespawn.Value)
-                {
-                    var respawnTime = RespawnTimeCalculation.GetRespawnTime();
+                case RespawnType.Teleporter:
+                    spawnTransform = new GameObject().transform;
+                    spawnTransform.position = RespawnPosition.GetSpawnPositionAroundTeleporter(body, 0.5f, 3);
+                    return spawnTransform;
 
-                    usersRespawnTimers.StartRespawnTimer(user.id, respawnTime);
-                    ChatHelper.UserWillRespawnAfter(user.userName, respawnTime);
-                }
-                else if (blockRespawningOnTP && PluginConfig.RespawnOnTPEnd.Value)
-                {
-                    ChatHelper.UserWillRespawnAfterTPEvent(user.userName);
-                }
+                case RespawnType.Mithrix:
+                    spawnTransform = new GameObject().transform;
+                    spawnTransform.position = RespawnPosition.GetSpawnPositionAroundMoonBoss(body, 100, 105);
+                    return spawnTransform;
+
+                default:
+                    return orig(self);
             }
         }
 
-        private void Run_OnUserAdded(On.RoR2.Run.orig_OnUserAdded orig, Run self, NetworkUser user)
+
+        private void Run_OnServerSceneChanged(On.RoR2.Run.orig_OnServerSceneChanged orig, Run self, string sceneName)
         {
-            orig(self, user);
+            orig(self, sceneName);
 
-            usersRespawnTimers.AddUserRespawnTimer(user.id);
-        }
+            IsAdvancingStage = false;
 
-        private void Run_OnUserRemoved(On.RoR2.Run.orig_OnUserRemoved orig, Run self, NetworkUser user)
-        {
-            orig(self, user);
-
-            usersRespawnTimers.RemoveUserRespawnTimer(user.id);
-        }
-
-        private void Run_BeginGameOver(On.RoR2.Run.orig_BeginGameOver orig, Run self, GameEndingDef gameEndingDef)
-        {
-            orig(self, gameEndingDef);
-
-            blockRespawningOnTP = false;
-            respawnNearTP = false;
-            usersRespawnTimers.ClearAllUsersRespawnTimers();
+            if (CheckIfCurrentStageIsIgnoredForTimedRespawn())
+            {
+                ChatHelper.TimedRespawnBlockedOnStage();
+            }
         }
 
         private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, Run self)
         {
             orig(self);
 
-            blockRespawningOnTP = false;
-            respawnNearTP = false;
-            usersRespawnTimers.ClearAllUsersRespawnTimers();
+            respawnCharacterMaster.Clear();
+            UnblockTimedRespawn();
+            RespawnType = RespawnType.Default;
         }
 
-        private void Run_OnServerSceneChanged(On.RoR2.Run.orig_OnServerSceneChanged orig, Run self, string sceneName)
+        public void BlockTimedRespawn()
         {
-            orig(self, sceneName);
+            IsTimedRespawnBlocked = true;
+            usersTimedRespawn.StopAllRespawnTimers();
+        }
 
-            if (CheckIfCurrentStageIsIgnored())
+        public void UnblockTimedRespawn()
+        {
+            IsTimedRespawnBlocked = false;
+            usersTimedRespawn.ResumeAllRespawnTimers();
+        }
+
+        public void RespawnUser(NetworkUser user)
+        {
+            if (user?.master && CheckIfCanRespawn(user.master))
             {
-                ChatHelper.RespawnBlockedOnStage();
+                Stage.instance.RespawnCharacter(user.master);
             }
         }
 
-        private bool CheckIfCanRespawn(CharacterMaster master)
+        public void RespawnAllUsers()
+        {
+            foreach(var user in NetworkUser.readOnlyInstancesList)
+            {
+                RespawnUser(user);
+            }
+        }
+
+        public bool CheckIfCanRespawn(CharacterMaster master)
         {
             return master &&
                    master.IsDeadAndOutOfLivesServer() &&
-                   !CheckIfCurrentStageIsIgnored() &&
-                   !blockRespawningOnTP;
+                   !IsAdvancingStage;
         }
 
-        private bool CheckIfCurrentStageIsIgnored()
+        public bool CheckIfCanTimedRespawn(CharacterMaster master)
         {
-            return PluginConfig.IgnoredMaps.Value.Contains(SceneCatalog.GetSceneDefForCurrentScene().baseSceneName);
+            return CheckIfCanRespawn(master) &&
+                   !CheckIfCurrentStageIsIgnoredForTimedRespawn() &&
+                   !IsTimedRespawnBlocked &&
+                   PluginConfig.UseTimedRespawn.Value;
+        }
+
+        public bool CheckIfCurrentStageIsIgnoredForTimedRespawn()
+        {
+            return PluginConfig.IgnoredMapsForTimedRespawn.Value.Contains(SceneCatalog.GetSceneDefForCurrentScene().baseSceneName);
         }
     }
 }

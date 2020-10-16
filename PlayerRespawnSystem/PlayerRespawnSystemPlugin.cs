@@ -22,9 +22,9 @@ namespace Mordrog
 
         private void InitConfig()
         {
-            PluginConfig.IgnoredMaps = Config.Bind<string>(
+            PluginConfig.IgnoredMapsForTimedRespawn = Config.Bind<string>(
                 "Settings",
-                "IgnoredMaps",
+                "IgnoredMapsForTimedRespawn",
                 "bazaar,arena,goldshores,moon,artifactworld,mysteryspace,limbo",
                 "Maps on which respawning is ignored."
             );
@@ -64,16 +64,16 @@ namespace Mordrog
                 "Time interval between updates of the UpdateCurrentRepsawnTimeByXSeconds."
             );
 
-            PluginConfig.UseTimeRespawn = Config.Bind<bool>(
+            PluginConfig.UseTimedRespawn = Config.Bind<bool>(
                 "Settings",
-                "UseTimeRespawn",
+                "UseTimedRespawn",
                 true,
                 "Should players be respawned on timed based system."
             );
 
-            PluginConfig.BlockRespawningOnTPEvent = Config.Bind<bool>(
+            PluginConfig.BlockTimedRespawnOnTPEvent = Config.Bind<bool>(
                 "Settings",
-                "BlockRespawningOnTPEvent",
+                "BlockTimedRespawnOnTPEvent",
                 true,
                 "Should players be blocked from respawning after teleporter event is started."
             );
@@ -90,6 +90,48 @@ namespace Mordrog
                 "RespawnOnTPEnd",
                 true,
                 "Should players be respawned on end of teleporter event (regardless of BlockSpawningOnTPEvent)."
+            );
+
+            PluginConfig.BlockTimedRespawnOnMithrixFight = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnMithrixFight",
+                true,
+                "Should players be blocked from respawning after Mithrix fight is started."
+            );
+
+            PluginConfig.RespawnOnMithrixStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnMithrixStart",
+                true,
+                "Should players be respawned on start of Mithrix fight (regardless of BlockRespawningOnMithrixFight or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnMithrixEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnMithrixEnd",
+                false,
+                "Should players be respawned on end of Mithrix fight (regardless of BlockRespawningOnMithrixFight or map being ignored)."
+            );
+
+            PluginConfig.BlockTimedRespawnOnArtifactTrial = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnArtifactTrial",
+                true,
+                "Should players be blocked from respawning after Artifact trial is started."
+            );
+
+            PluginConfig.RespawnOnArtifactTrialStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnArtifactTrialStart",
+                true,
+                "Should players be respawned on start of Artifact trial (regardless of BlockTimedRespawningOnArtifactTrial or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnArtifactTrialEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnArtifactTrialEnd",
+                true,
+                "Should players be respawned on end of Artifact trial (regardless of BlockTimedRespawningOnArtifactTrial or map being ignored)."
             );
         }
     }

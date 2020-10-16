@@ -8,8 +8,15 @@ namespace Mordrog
     {
         private Dictionary<NetworkUserId, UserTimer> usersRespawnTimers = new Dictionary<NetworkUserId, UserTimer>();
 
+        public IReadOnlyDictionary<NetworkUserId, UserTimer> readOnlyInstances => usersRespawnTimers;
+
         public delegate void UserTimerRespawnTimerEnd(NetworkUser user);
         public event UserTimerRespawnTimerEnd OnUserTimerRespawnTimerEnd;
+
+        public void OnDestroy()
+        {
+            ClearAllUsersRespawnTimers();
+        }
 
         public void StartRespawnTimer(NetworkUserId userId, uint respawnTime)
         {
@@ -37,7 +44,31 @@ namespace Mordrog
         {
             foreach (var userRespawnTimer in usersRespawnTimers.Values)
             {
+                userRespawnTimer.Stop();
+            }
+        }
+
+        public void ResumeAllCurrentRespawnTimers()
+        {
+            foreach (var userRespawnTimer in usersRespawnTimers.Values)
+            {
+                userRespawnTimer.Resume();
+            }
+        }
+
+        public void ResetAllCurrentRespawnTimers()
+        {
+            foreach (var userRespawnTimer in usersRespawnTimers.Values)
+            {
                 userRespawnTimer.Reset();
+            }
+        }
+
+        public void ClearAllUsersRespawnTimers()
+        {
+            foreach (var userId in new List<NetworkUserId>(usersRespawnTimers.Keys))
+            {
+                RemoveUserRespawnTimer(userId);
             }
         }
 
@@ -47,7 +78,7 @@ namespace Mordrog
             {
                 usersRespawnTimers[userId] = gameObject.AddComponent<UserTimer>();
                 usersRespawnTimers[userId].UserId = userId;
-                usersRespawnTimers[userId].OnRespawnInFiveSeconds += UsersRespawnTimers_OnRespawnInFiveSeconds;
+                usersRespawnTimers[userId].OnTimerEndInFiveSeconds += UsersRespawnTimers_OnRespawnInFiveSeconds;
                 usersRespawnTimers[userId].OnTimerEnd += UsersRespawnTimers_OnTimerEnd;
             }
         }
@@ -56,18 +87,10 @@ namespace Mordrog
         {
             if (usersRespawnTimers.TryGetValue(userId, out var userTimer))
             {
-                userTimer.OnRespawnInFiveSeconds -= UsersRespawnTimers_OnRespawnInFiveSeconds;
+                userTimer.OnTimerEndInFiveSeconds -= UsersRespawnTimers_OnRespawnInFiveSeconds;
                 userTimer.OnTimerEnd -= UsersRespawnTimers_OnTimerEnd;
                 DestroyImmediate(usersRespawnTimers[userId]);
                 usersRespawnTimers.Remove(userId);
-            }
-        }
-
-        public void ClearAllUsersRespawnTimers()
-        {
-            foreach (var userId in new List<NetworkUserId>(usersRespawnTimers.Keys))
-            {
-                RemoveUserRespawnTimer(userId);
             }
         }
 

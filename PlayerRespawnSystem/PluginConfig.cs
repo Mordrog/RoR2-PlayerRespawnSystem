@@ -5,8 +5,7 @@ namespace Mordrog
     public static class PluginConfig
     {
         public static ConfigEntry<string>
-            IgnoredMaps
-            ;
+            IgnoredMapsForTimedRespawn;
 
         public static ConfigEntry<RespawnTimeType>
             RespawnTimeType;
@@ -18,9 +17,15 @@ namespace Mordrog
             UpdateCurrentRepsawnTimeByXSeconds;
 
         public static ConfigEntry<bool>
-            UseTimeRespawn,
-            BlockRespawningOnTPEvent,
+            UseTimedRespawn,
+            BlockTimedRespawnOnTPEvent,
             RespawnOnTPStart,
-            RespawnOnTPEnd;
+            RespawnOnTPEnd,
+            BlockTimedRespawnOnMithrixFight,
+            RespawnOnMithrixStart,
+            RespawnOnMithrixEnd,
+            BlockTimedRespawnOnArtifactTrial,
+            RespawnOnArtifactTrialStart,
+            RespawnOnArtifactTrialEnd;
     }
 }

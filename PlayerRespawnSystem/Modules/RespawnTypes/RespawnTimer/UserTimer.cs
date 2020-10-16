@@ -4,14 +4,16 @@ namespace Mordrog
 {
     class UserTimer : NetworkBehaviour
     {
-        private float timeRemaining = 0;
+        
         private bool spawnInFiveSecondsFired = false;
 
-        public delegate void RespawnInFiveSeconds(RoR2.NetworkUserId userId);
-        public event RespawnInFiveSeconds OnRespawnInFiveSeconds;
+        public delegate void TimerEndInFiveSeconds(RoR2.NetworkUserId userId);
+        public event TimerEndInFiveSeconds OnTimerEndInFiveSeconds;
 
         public delegate void TimerEnd(RoR2.NetworkUserId userId);
         public event TimerEnd OnTimerEnd;
+
+        public float TimeRemaining { get; private set; } = 0;
 
         public RoR2.NetworkUserId UserId { get; set; }
 
@@ -19,7 +21,7 @@ namespace Mordrog
 
         public void StartTimer(float time)
         {
-            timeRemaining = time;
+            TimeRemaining = time;
             spawnInFiveSecondsFired = false;
             IsRunning = true;
         }
@@ -27,21 +29,33 @@ namespace Mordrog
         public void Reset()
         {
             IsRunning = false;
-            timeRemaining = 0;
+            TimeRemaining = 0;
+        }
+
+        public void Stop()
+        {
+            if (TimeRemaining > 0)
+                IsRunning = false;
+        }
+
+        public void Resume()
+        {
+            if (TimeRemaining > 0)
+                IsRunning = true;
         }
 
         public void Update()
         {
             if (IsRunning)
             {
-                if (timeRemaining > 0)
+                if (TimeRemaining > 0)
                 {
-                    timeRemaining -= UnityEngine.Time.deltaTime;
+                    TimeRemaining -= UnityEngine.Time.deltaTime;
 
-                    if (timeRemaining <= 5 && !spawnInFiveSecondsFired)
+                    if (TimeRemaining <= 5 && !spawnInFiveSecondsFired)
                     {
                         spawnInFiveSecondsFired = true;
-                        OnRespawnInFiveSeconds?.Invoke(UserId);
+                        OnTimerEndInFiveSeconds?.Invoke(UserId);
                     }
                 }
                 else
