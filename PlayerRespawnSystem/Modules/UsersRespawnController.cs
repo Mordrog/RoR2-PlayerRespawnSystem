@@ -142,11 +142,14 @@ namespace Mordrog
 
         private void Stage_RespawnCharacter(On.RoR2.Stage.orig_RespawnCharacter orig, Stage self, CharacterMaster characterMaster)
         {
-            CharacterBody body = characterMaster?.bodyPrefab?.GetComponent<CharacterBody>();
-
-            if (body)
+            if (characterMaster.bodyPrefab)
             {
-                respawnCharacterMaster.Enqueue(body);
+                CharacterBody body = characterMaster.bodyPrefab.GetComponent<CharacterBody>();
+
+                if (body)
+                {
+                    respawnCharacterMaster.Enqueue(body);
+                }
             }
 
             orig(self, characterMaster);
