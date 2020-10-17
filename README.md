@@ -37,6 +37,9 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.0.1
+- Reset respawn timer after RoR2 respawn method is called to eleminate conflicts with other respawn mods
+
 #### 2.0.0
 - Update icon
 - Added plentiful options to control respawning on certain events, regardless of timed respawn
