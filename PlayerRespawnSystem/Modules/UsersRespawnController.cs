@@ -45,6 +45,7 @@ namespace Mordrog
             On.RoR2.Stage.BeginAdvanceStage += Stage_BeginAdvanceStage;
             On.RoR2.Stage.RespawnCharacter += Stage_RespawnCharacter;
             On.RoR2.Stage.GetPlayerSpawnTransform += Stage_GetPlayerSpawnTransform;
+            On.RoR2.CharacterMaster.Respawn += CharacterMaster_Respawn;
             On.RoR2.Run.OnServerSceneChanged += Run_OnServerSceneChanged;
             On.RoR2.Run.OnDestroy += Run_OnDestroy;
         }
@@ -67,6 +68,7 @@ namespace Mordrog
             On.RoR2.Stage.BeginAdvanceStage -= Stage_BeginAdvanceStage;
             On.RoR2.Stage.RespawnCharacter -= Stage_RespawnCharacter;
             On.RoR2.Stage.GetPlayerSpawnTransform -= Stage_GetPlayerSpawnTransform;
+            On.RoR2.CharacterMaster.Respawn -= CharacterMaster_Respawn;
             On.RoR2.Run.OnServerSceneChanged -= Run_OnServerSceneChanged;
             On.RoR2.Run.OnDestroy -= Run_OnDestroy;
 
@@ -182,6 +184,12 @@ namespace Mordrog
             }
         }
 
+        private CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool tryToGroundSafely)
+        {
+            usersTimedRespawn.ResetTimedRespawn(UsersHelper.GetUser(self));
+
+            return orig(self, footPosition, rotation, tryToGroundSafely);
+        }
 
         private void Run_OnServerSceneChanged(On.RoR2.Run.orig_OnServerSceneChanged orig, Run self, string sceneName)
         {

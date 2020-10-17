@@ -26,17 +26,11 @@ namespace Mordrog
             }
         }
 
-        public void InstantRespawnAll()
+        public void ResetRespawnTimer(NetworkUserId userId)
         {
-            foreach (var userRespawnTimerEntry in usersRespawnTimers)
+            if (usersRespawnTimers.TryGetValue(userId, out var userTimer))
             {
-                var user = UsersHelper.GetUser(userRespawnTimerEntry.Key);
-
-                if (user)
-                {
-                    userRespawnTimerEntry.Value.Reset();
-                    OnUserTimerRespawnTimerEnd?.Invoke(user);
-                }
+                userTimer.Reset();
             }
         }
 

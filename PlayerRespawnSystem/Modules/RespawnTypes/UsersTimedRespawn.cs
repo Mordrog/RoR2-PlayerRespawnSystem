@@ -76,6 +76,14 @@ namespace Mordrog
             }
         }
 
+        public void ResetTimedRespawn(RoR2.NetworkUser user)
+        {
+            if (user)
+            {
+                usersRespawnTimers.ResetRespawnTimer(user.id);
+            }
+        }
+
         public void StopAllRespawnTimers()
         {
             usersRespawnTimers.StopAllCurrentRespawnTimers();
