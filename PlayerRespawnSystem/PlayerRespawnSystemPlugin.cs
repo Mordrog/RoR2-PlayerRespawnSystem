@@ -1,11 +1,13 @@
 ﻿using BepInEx;
 using R2API;
+using R2API.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Mordrog
 {
     [BepInDependency("com.bepis.r2api")]
+    [R2APISubmoduleDependency(nameof(PrefabAPI))]
     [BepInPlugin(ModGuid, ModName, ModVer)]
     public class PlayerRespawnSystemPlugin : BaseUnityPlugin
     {
