@@ -8,9 +8,13 @@ namespace Mordrog
         public static Vector3 GetSpawnPositionAroundTeleporter(RoR2.CharacterBody body, float minSpawnRadius, float maxSpawnRadius)
         {
             Vector3 positionAroundTP = Vector3.zero;
-            
+            int tries = 0;
+
             do
             {
+                if (tries++ > 1000)
+                    return Vector3.zero;
+
                 positionAroundTP = RoR2.TeleporterInteraction.instance.transform.position;
                 positionAroundTP += GetRandomPositionInCircle(minSpawnRadius, maxSpawnRadius);
 
@@ -21,9 +25,13 @@ namespace Mordrog
         public static Vector3 GetSpawnPositionAroundMoonBoss(RoR2.CharacterBody body, float minSpawnRadius, float maxSpawnRadius)
         {
             Vector3 positionAroundTP = Vector3.zero;
+            int tries = 0;
 
             do
             {
+                if (tries++ > 1000)
+                    return Vector3.zero;
+
                 positionAroundTP = GameObject.Find("ArenaWalls").transform.position;
                 positionAroundTP += GetRandomPositionInCircle(minSpawnRadius, maxSpawnRadius);
 

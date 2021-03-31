@@ -172,16 +172,25 @@ namespace Mordrog
                 case RespawnType.Teleporter:
                     spawnTransform = new GameObject().transform;
                     spawnTransform.position = RespawnPosition.GetSpawnPositionAroundTeleporter(body, 0.5f, 3);
-                    return spawnTransform;
+
+                    if (spawnTransform.position != Vector3.zero)
+                        return spawnTransform;
+
+                    Debug.Log($"UsersRespawnController::Stage_GetPlayerSpawnTransform hook: Failed to find better respawn position for '{RespawnType}' respawn type");
+                    break;
 
                 case RespawnType.Mithrix:
                     spawnTransform = new GameObject().transform;
                     spawnTransform.position = RespawnPosition.GetSpawnPositionAroundMoonBoss(body, 100, 105);
-                    return spawnTransform;
 
-                default:
-                    return orig(self);
+                    if (spawnTransform.position != Vector3.zero)
+                        return spawnTransform;
+
+                    Debug.Log($"UsersRespawnController::Stage_GetPlayerSpawnTransform hook: Failed to find better respawn position for '{RespawnType}' respawn type");
+                    break;
             }
+
+            return orig(self);
         }
 
         private CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool tryToGroundSafely)
