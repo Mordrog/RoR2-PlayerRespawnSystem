@@ -11,32 +11,38 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 **This feature is client dependent** meaning, clients will only have this panel shown if they have mod.
 
 ### Default Config Settings
-| Setting                                               | Default Value                                                             |
-| :-------------------------------------                | :-----------------------------------------------------------------------: |
-| IgnoredMapsForTimedRespawn                            |           "bazaar,arena,goldshores,moon,artifactworld,mysteryspace,limbo" |
-| RespawnTimeType                                       |                                                            StageTimeBased |
-| StartingRespawnTime                                   |                                                                        30 |
-| MaxRespawnTime                                        |                                                                       180 |
-| UpdateCurrentRepsawnTimeByXSeconds                    |                                                                         5 |
-| UpdateCurrentRespawnTimeEveryXSeconds                 |                                                                        10 |
-| UsePodsOnStartOfMatch                                 |                                                                     false |
-| UseDeathTimerUI                                       |                                                                      true |
-| UseTimedRespawn                                       |                                                                      true |
-| BlockTimedRespawnOnTPEvent                            |                                                                      true |
-| RespawnOnTPStart                                      |                                                                      true |
-| RespawnOnTPEnd                                        |                                                                      true |
-| BlockTimedRespawnOnMithrixFight                       |                                                                      true |
-| RespawnOnMithrixStart                                 |                                                                      true |
-| RespawnOnMithrixEnd                                   |                                                                     false |
-| BlockTimedRespawnOnArtifactTrial                      |                                                                      true |
-| RespawnOnArtifactTrialStart                           |                                                                      true |
-| RespawnOnArtifactTrialEnd                             |                                                                      true |
+| Setting                                               | Default Value                                                                   |
+| :-------------------------------------                | :-----------------------------------------------------------------------------: |
+| IgnoredMapsForTimedRespawn                            |           "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo" |
+| RespawnTimeType                                       |                                                            StageTimeBased        |
+| StartingRespawnTime                                   |                                                                        30        |
+| MaxRespawnTime                                        |                                                                       180        |
+| UpdateCurrentRepsawnTimeByXSeconds                    |                                                                         5        |
+| UpdateCurrentRespawnTimeEveryXSeconds                 |                                                                        10        |
+| UsePodsOnStartOfMatch                                 |                                                                     false        |
+| UseDeathTimerUI                                       |                                                                      true        |
+| UseTimedRespawn                                       |                                                                      true        |
+| BlockTimedRespawnOnTPEvent                            |                                                                      true        |
+| RespawnOnTPStart                                      |                                                                      true        |
+| RespawnOnTPEnd                                        |                                                                      true        |
+| BlockTimedRespawnOnMithrixFight                       |                                                                      true        |
+| RespawnOnMithrixStart                                 |                                                                      true        |
+| RespawnOnMithrixEnd                                   |                                                                     false        |
+| BlockTimedRespawnOnArtifactTrial                      |                                                                      true        |
+| RespawnOnArtifactTrialStart                           |                                                                      true        |
+| RespawnOnArtifactTrialEnd                             |                                                                      true        |
 
 ## More
 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.0.2
+- Fix for Anniversary Update
+- Fix issue where game would freeze if no proper repsawn point was found
+- Fix missing R2Api "PrefabApi" reference
+- Added new Moon stage to ignored Stages for timed respawn
+
 #### 2.0.1
 - Reset respawn timer after RoR2 respawn method is called to eleminate conflicts with other respawn mods
 
