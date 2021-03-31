@@ -193,11 +193,11 @@ namespace Mordrog
             return orig(self);
         }
 
-        private CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool tryToGroundSafely)
+        private CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation)
         {
             usersTimedRespawn.ResetTimedRespawn(UsersHelper.GetUser(self));
 
-            return orig(self, footPosition, rotation, tryToGroundSafely);
+            return orig(self, footPosition, rotation);
         }
 
         private void Run_OnServerSceneChanged(On.RoR2.Run.orig_OnServerSceneChanged orig, Run self, string sceneName)
