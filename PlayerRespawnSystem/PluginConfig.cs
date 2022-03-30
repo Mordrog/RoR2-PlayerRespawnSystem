@@ -5,7 +5,8 @@ namespace Mordrog
     public static class PluginConfig
     {
         public static ConfigEntry<string>
-            IgnoredMapsForTimedRespawn;
+            IgnoredMapsForTimedRespawn,
+            IgnoredGameModes;
 
         public static ConfigEntry<RespawnTimeType>
             RespawnTimeType;

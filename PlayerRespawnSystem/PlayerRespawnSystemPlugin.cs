@@ -54,6 +54,9 @@ namespace Mordrog
         {
             orig(self);
 
+            if (PluginConfig.IgnoredGameModes.Value.Contains(RoR2.GameModeCatalog.GetGameModeName(self.gameModeIndex)))
+                return;
+
             deathTimerController.SetActive(true);
 
             if (NetworkServer.active)
@@ -66,6 +69,9 @@ namespace Mordrog
         private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, RoR2.Run self)
         {
             orig(self);
+
+            if (PluginConfig.IgnoredGameModes.Value.Contains(RoR2.GameModeCatalog.GetGameModeName(self.gameModeIndex)))
+                return;
 
             if (deathTimerController)
                 deathTimerController.SetActive(false);
@@ -86,6 +92,13 @@ namespace Mordrog
                 "IgnoredMapsForTimedRespawn",
                 "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid",
                 "Maps on which respawning is ignored."
+            );
+
+            PluginConfig.IgnoredGameModes = Config.Bind<string>(
+                "Settings",
+                "IgnoredGameModes",
+                "InfiniteTowerRun",
+                "Gamemode in which respawning should not work."
             );
 
             PluginConfig.RespawnTimeType = Config.Bind<RespawnTimeType>(
