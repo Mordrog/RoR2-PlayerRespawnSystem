@@ -59,11 +59,10 @@ namespace Mordrog
 
             deathTimerController.SetActive(true);
 
+            usersRespawnController = base.gameObject.AddComponent<UsersRespawnController>();
+
             if (NetworkServer.active)
-            {
-                usersRespawnController = base.gameObject.AddComponent<UsersRespawnController>();
                 NetworkServer.Spawn(deathTimerController);
-            }
         }
 
         private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, RoR2.Run self)
@@ -76,13 +75,10 @@ namespace Mordrog
             if (deathTimerController)
                 deathTimerController.SetActive(false);
 
-            if (NetworkServer.active)
-            {
-                Destroy(usersRespawnController);
+            Destroy(usersRespawnController);
 
-                if (deathTimerController)
-                    NetworkServer.UnSpawn(deathTimerController);
-            }
+            if (NetworkServer.active && deathTimerController)
+                NetworkServer.UnSpawn(deathTimerController);
         }
 
         private void InitConfig()
