@@ -84,7 +84,7 @@ namespace Mordrog
             PluginConfig.IgnoredMapsForTimedRespawn = Config.Bind<string>(
                 "Settings",
                 "IgnoredMapsForTimedRespawn",
-                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo",
+                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid",
                 "Maps on which respawning is ignored."
             );
 
