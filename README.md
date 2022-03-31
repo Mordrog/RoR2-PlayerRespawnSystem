@@ -14,6 +14,7 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 | Setting                                               | Default Value                                                                   |
 | :-------------------------------------                | :-----------------------------------------------------------------------------: |
 | IgnoredMapsForTimedRespawn                            |           "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo" |
+| IgnoredGameModes                                      |                                                              "IgnoredGameModes" |
 | RespawnTimeType                                       |                                                            StageTimeBased        |
 | StartingRespawnTime                                   |                                                                        30        |
 | MaxRespawnTime                                        |                                                                       180        |
@@ -37,6 +38,12 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.0.3
+- Fix for Survivors of the Void changes
+- Fix bug where sometimes respawn system would not correctly destroy it's instance resulting in it's duplication
+- Added new void boss stage to ignored by default
+- Added option to turn off respawn on selected game modes
+
 #### 2.0.2
 - Fix for Anniversary Update
 - Fix issue where game would freeze if no proper repsawn point was found
