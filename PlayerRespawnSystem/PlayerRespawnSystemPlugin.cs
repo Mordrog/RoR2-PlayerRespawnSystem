@@ -8,6 +8,7 @@ namespace Mordrog
 {
     [BepInDependency("com.bepis.r2api")]
     [R2APISubmoduleDependency(nameof(PrefabAPI))]
+    [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
     [BepInPlugin(ModGuid, ModName, ModVer)]
     public class PlayerRespawnSystemPlugin : BaseUnityPlugin
     {
