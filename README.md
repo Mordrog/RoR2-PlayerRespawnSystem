@@ -38,6 +38,9 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.0.4
+- Update manifest + rebuild on new patch
+
 #### 2.0.3
 - Fix for Survivors of the Void changes
 - Fix bug where sometimes respawn system would not correctly destroy it's instance resulting in it's duplication
