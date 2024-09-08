@@ -223,6 +223,27 @@ namespace PlayerRespawnSystem
                 true,
                 "Should players be respawned on end of Artifact trial (regardless of BlockTimedRespawningOnArtifactTrial or map being ignored)."
             );
+
+            PluginConfig.BlockTimedRespawnOnVoidlingFight = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnVoidlingFight",
+                true,
+                "Should players be blocked from respawning after Voidling fight is started."
+            );
+
+            PluginConfig.RespawnOnVoidlingStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnVoidlingStart",
+                true,
+                "Should players be respawned on start of Voidling fight (regardless of BlockTimedRespawnOnVoidlingFight or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnVoidlingEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnVoidlingEnd",
+                true,
+                "Should players be respawned on end of Voidling fight (regardless of BlockTimedRespawnOnVoidlingFight or map being ignored)."
+            );
         }
     }
 }

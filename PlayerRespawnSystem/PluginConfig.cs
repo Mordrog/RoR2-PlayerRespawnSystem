@@ -29,6 +29,9 @@ namespace PlayerRespawnSystem
             RespawnOnMithrixEnd,
             BlockTimedRespawnOnArtifactTrial,
             RespawnOnArtifactTrialStart,
-            RespawnOnArtifactTrialEnd;
+            RespawnOnArtifactTrialEnd,
+            BlockTimedRespawnOnVoidlingFight,
+            RespawnOnVoidlingStart,
+            RespawnOnVoidlingEnd;
     }
 }

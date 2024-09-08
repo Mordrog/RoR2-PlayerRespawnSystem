@@ -12,7 +12,8 @@ namespace PlayerRespawnSystem
         Timed,
         Teleporter,
         Mithrix,
-        Artifact
+        Artifact,
+        Voidling
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
