@@ -1,90 +1,81 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>D:\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\plugins\Mordrog-PlayerRespawnSystem\</OutputPath>
+    <OutputPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\Mordrog-PlayerRespawnSystem</OutputPath>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\0Harmony.dll</HintPath>
-	  <Private>false</Private>
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx.Harmony">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx.Preloader">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.Preloader.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MMHOOK_RoR2">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\MMHOOK\MMHOOK_RoR2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.dll">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\MonoMod.Utils.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp.R2API.mm">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\monomod\tristanmcpherson-R2API\Assembly-CSharp.R2API.mm.dll</HintPath>
+    <Reference Include="Unity.Addressables">
+      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Unity.Addressables.dll</HintPath>
       <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\BepInEx.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\BepInEx.Harmony.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx.MonoMod.Loader">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\patchers\BepInEx.MonoMod.Loader\BepInEx.MonoMod.Loader.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx.Preloader">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\BepInEx.Preloader.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="MMHOOK_Assembly-CSharp">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\plugins\tristanmcpherson-R2API\R2API\MMHOOK_Assembly-CSharp.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\Mono.Cecil.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\patchers\BepInEx.MonoMod.Loader\MonoMod.exe</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\core\MonoMod.Utils.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="R2API">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\plugins\tristanmcpherson-R2API\R2API\R2API.dll</HintPath>
-	  <Private>false</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
+    </Reference>
+	<Reference Include="R2API.Core">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\RiskofThunder-R2API_Core\R2API.Core\R2API.Core.dll</HintPath>
+	  <Private>false</Private>
+    </Reference>
+	<Reference Include="R2API.Prefab">
+      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\RiskofThunder-R2API_Prefab\R2API.Prefab\R2API.Prefab.dll</HintPath>
+	  <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.dll</HintPath>
@@ -94,12 +85,16 @@
       <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.Networking.dll</HintPath>
+    <Reference Include="com.unity.multiplayer-hlapi.Runtime">
+      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="RoR2">
+      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\RoR2.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
@@ -111,5 +106,9 @@
       <Private>false</Private>
     </Reference>
   </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="REM First we copy the from the output folder to the NetworkWeaver folder.&#xD;&#xA;REM Move script from output location to NetworkWeaver folder&#xD;&#xA;robocopy &quot;$(TargetDir.TrimEnd('\'))&quot; &quot;$(ProjectDir)NetworkWeaver&quot; $(TargetFileName)&#xD;&#xA;REM Then we navigate our script to the NetworkWeaver folder to make the follow up line less verbose.&#xD;&#xA;cd $(ProjectDir)NetworkWeaver&#xD;&#xA;REM Unity.UNetWeaver.exe {path to Coremodule} {Path to Networking} {Path to output folder} {Path to the dll you want patched} {Path to all needed references for the to-be-patched dll}&#xD;&#xA;Unity.UNetWeaver.exe &quot;..\libs\UnityEngine.CoreModule.dll&quot; &quot;..\libs\com.unity.multiplayer-hlapi.Runtime.dll&quot; &quot;Patched/&quot;  $(TargetFileName) &quot;$(ProjectDir)libs&quot; &quot;C:\Users\Mordrog\.nuget\packages\unityengine.modules\2022.3.9\lib\netstandard2.0&quot; &quot;D:\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed&quot; &quot;C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1&quot;&#xD;&#xA;REM We store the prepatched dll disabled as a .prepatch so that you can check it if you want, but first we need to make sure that file doesn't exist already.&#xD;&#xA;IF EXIST $(TargetFileName).prepatch (&#xD;&#xA;DEL /F $(TargetFileName).prepatch&#xD;&#xA;)&#xD;&#xA;REM Then we rename the prepatched file to bla.dll.prepatch&#xD;&#xA;ren $(TargetFileName) $(TargetFileName).prepatch&#xD;&#xA;REM Move our script to the Patched Folder&#xD;&#xA;cd Patched&#xD;&#xA;REM Move from the current directory (.) to the output location&#xD;&#xA;robocopy . &quot;$(TargetDir.TrimEnd('\'))&quot;  $(TargetFileName)&#xD;&#xA;REM Remove the patched file from the Patched folder, because the Weaver won't run if the file already exists.&#xD;&#xA;del  $(TargetFileName)" />
+  </Target>
 
 </Project>

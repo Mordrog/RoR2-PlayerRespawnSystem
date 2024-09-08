@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using System.Linq;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
     public static class UsersHelper
     {

@@ -1,11 +1,8 @@
-﻿using UnityEngine.Networking;
-
-namespace Mordrog
+﻿namespace PlayerRespawnSystem
 {
-    class UsersArtifactTrialRespawn : NetworkBehaviour
+    [AssociatedRespawnType(RespawnType.Artifact)]
+    class ArtifactTrialRespawnController : RespawnController
     {
-        public UsersRespawnController respawnController;
-
         public void Awake()
         {
             On.RoR2.ArtifactTrialMissionController.CombatState.OnEnter += ArtifactTrialMissionController_CombatState_OnEnter;
@@ -22,16 +19,16 @@ namespace Mordrog
         {
             orig(self);
 
-            respawnController.RespawnType = RespawnType.Artifact;
+            IsActive = true;
 
             if (PluginConfig.RespawnOnArtifactTrialStart.Value)
             {
-                respawnController.RespawnAllUsers();
+                playerRespawner.RespawnAllUsers(this);
             }
 
             if (PluginConfig.BlockTimedRespawnOnArtifactTrial.Value)
             {
-                respawnController.BlockTimedRespawn();
+                RequestTimedRespawnBlock();
             }
         }
 
@@ -41,13 +38,15 @@ namespace Mordrog
 
             if (PluginConfig.BlockTimedRespawnOnArtifactTrial.Value)
             {
-                respawnController.UnblockTimedRespawn();
+                RequestTimedRespawnUnblock();
             }
 
             if (PluginConfig.RespawnOnArtifactTrialEnd.Value)
             {
-                respawnController.RespawnAllUsers();
+                playerRespawner.RespawnAllUsers(this);
             }
+
+            IsActive = false;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Mordrog
+﻿namespace PlayerRespawnSystem
 {
     public static class ChatHelper
     {

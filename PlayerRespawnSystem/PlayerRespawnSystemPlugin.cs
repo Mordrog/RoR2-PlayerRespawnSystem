@@ -4,10 +4,9 @@ using R2API.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
     [BepInDependency("com.bepis.r2api")]
-    [R2APISubmoduleDependency(nameof(PrefabAPI))]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
     [BepInPlugin(ModGuid, ModName, ModVer)]
     public class PlayerRespawnSystemPlugin : BaseUnityPlugin
@@ -16,10 +15,10 @@ namespace Mordrog
         public const string ModName = "PlayerRespawnSystem";
         public const string ModGuid = "com.Mordrog.PlayerRespawnSystem";
 
-        private UsersRespawnController usersRespawnController;
+        private PlayerRespawnSystem playerRespawnSystem;
 
-        private static GameObject DeathTimerControllerPrefab;
-        private GameObject deathTimerController;
+        private static GameObject uiDeathTimerControllerPrefab;
+        private GameObject uiDeathTimerController;
 
         public PlayerRespawnSystemPlugin()
         {
@@ -31,9 +30,9 @@ namespace Mordrog
             //Create prefab
             var temp = new GameObject("temp");
             temp.AddComponent<NetworkIdentity>();
-            DeathTimerControllerPrefab = temp.InstantiateClone("DeathTimerController");
+            uiDeathTimerControllerPrefab = temp.InstantiateClone("UIDeathTimerController");
             Destroy(temp);
-            DeathTimerControllerPrefab.AddComponent<DeathTimerController>();
+            uiDeathTimerControllerPrefab.AddComponent<UIDeathTimerController>();
 
             On.RoR2.NetworkUser.OnEnable += NetworkUser_OnEnable;
             On.RoR2.Run.Awake += Run_Awake;
@@ -44,10 +43,10 @@ namespace Mordrog
         {
             orig(self);
 
-            if (!deathTimerController)
+            if (!uiDeathTimerController)
             {
-                deathTimerController = Instantiate(DeathTimerControllerPrefab);
-                deathTimerController.transform.SetParent(self.transform, false);
+                uiDeathTimerController = Instantiate(uiDeathTimerControllerPrefab);
+                uiDeathTimerController.transform.SetParent(self.transform, false);
             }
         }
 
@@ -56,30 +55,38 @@ namespace Mordrog
             orig(self);
 
             if (PluginConfig.IgnoredGameModes.Value.Contains(RoR2.GameModeCatalog.GetGameModeName(self.gameModeIndex)))
+            {
                 return;
+            }
 
-            deathTimerController.SetActive(true);
+            uiDeathTimerController.SetActive(true);
 
-            usersRespawnController = base.gameObject.AddComponent<UsersRespawnController>();
+            playerRespawnSystem = gameObject.AddComponent<PlayerRespawnSystem>();
 
             if (NetworkServer.active)
-                NetworkServer.Spawn(deathTimerController);
+            {
+                NetworkServer.Spawn(uiDeathTimerController);
+            }
         }
 
         private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, RoR2.Run self)
         {
             orig(self);
 
-            if (PluginConfig.IgnoredGameModes.Value.Contains(RoR2.GameModeCatalog.GetGameModeName(self.gameModeIndex)))
-                return;
+            if (uiDeathTimerController)
+            {
+                uiDeathTimerController.SetActive(false);
+            }
 
-            if (deathTimerController)
-                deathTimerController.SetActive(false);
+            if (playerRespawnSystem)
+            {
+                Destroy(playerRespawnSystem);
+            }
 
-            Destroy(usersRespawnController);
-
-            if (NetworkServer.active && deathTimerController)
-                NetworkServer.UnSpawn(deathTimerController);
+            if (NetworkServer.active && uiDeathTimerController)
+            {
+                NetworkServer.UnSpawn(uiDeathTimerController);
+            }
         }
 
         private void InitConfig()

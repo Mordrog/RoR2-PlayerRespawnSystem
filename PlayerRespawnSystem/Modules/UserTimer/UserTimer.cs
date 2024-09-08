@@ -1,11 +1,14 @@
 ﻿using UnityEngine.Networking;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
     class UserTimer : NetworkBehaviour
     {
-        
-        private bool spawnInFiveSecondsFired = false;
+        public RoR2.NetworkUserId UserId { get; set; }
+
+        public float TimeRemaining { get; private set; } = 0;
+
+        public bool IsRunning { get; private set; } = false;
 
         public delegate void TimerEndInFiveSeconds(RoR2.NetworkUserId userId);
         public event TimerEndInFiveSeconds OnTimerEndInFiveSeconds;
@@ -13,16 +16,17 @@ namespace Mordrog
         public delegate void TimerEnd(RoR2.NetworkUserId userId);
         public event TimerEnd OnTimerEnd;
 
-        public float TimeRemaining { get; private set; } = 0;
+        private bool hasTimerEndInFiveSecondsFired = false;
 
-        public RoR2.NetworkUserId UserId { get; set; }
-
-        public bool IsRunning { get; private set; } = false;
+        public UserTimer(RoR2.NetworkUserId userId)
+        {
+            UserId = userId;
+        }
 
         public void StartTimer(float time)
         {
             TimeRemaining = time;
-            spawnInFiveSecondsFired = false;
+            hasTimerEndInFiveSecondsFired = false;
             IsRunning = true;
         }
 
@@ -35,13 +39,17 @@ namespace Mordrog
         public void Stop()
         {
             if (TimeRemaining > 0)
+            {
                 IsRunning = false;
+            }
         }
 
         public void Resume()
         {
             if (TimeRemaining > 0)
+            {
                 IsRunning = true;
+            }
         }
 
         public void Update()
@@ -52,9 +60,9 @@ namespace Mordrog
                 {
                     TimeRemaining -= UnityEngine.Time.deltaTime;
 
-                    if (TimeRemaining <= 5 && !spawnInFiveSecondsFired)
+                    if (TimeRemaining <= 5 && !hasTimerEndInFiveSecondsFired)
                     {
-                        spawnInFiveSecondsFired = true;
+                        hasTimerEndInFiveSecondsFired = true;
                         OnTimerEndInFiveSeconds?.Invoke(UserId);
                     }
                 }

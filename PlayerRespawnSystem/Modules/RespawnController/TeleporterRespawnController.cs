@@ -1,11 +1,10 @@
-﻿using UnityEngine.Networking;
+﻿using UnityEngine;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
-    class UsersTeleporterRespawn : NetworkBehaviour
+    [AssociatedRespawnType(RespawnType.Teleporter)]
+    class TeleporterRespawnController : RespawnController
     {
-        public UsersRespawnController respawnController;
-
         public void Awake()
         {
             On.RoR2.TeleporterInteraction.ChargingState.OnEnter += TeleporterInteraction_ChargingState_OnEnter;
@@ -22,16 +21,16 @@ namespace Mordrog
         {
             orig(self);
 
-            respawnController.RespawnType = RespawnType.Teleporter;
+            IsActive = true;
 
             if (PluginConfig.RespawnOnTPStart.Value)
             {
-                respawnController.RespawnAllUsers();
+                playerRespawner.RespawnAllUsers(this);
             }
 
             if (PluginConfig.BlockTimedRespawnOnTPEvent.Value)
             {
-                respawnController.BlockTimedRespawn();
+                RequestTimedRespawnBlock();
                 ChatHelper.RespawnBlockedOnTPEvent();
             }
         }
@@ -42,13 +41,31 @@ namespace Mordrog
 
             if (PluginConfig.BlockTimedRespawnOnTPEvent.Value)
             {
-                respawnController.UnblockTimedRespawn();
+                RequestTimedRespawnUnblock();
             }
 
             if (PluginConfig.RespawnOnTPEnd.Value)
             {
-                respawnController.RespawnAllUsers();
+                playerRespawner.RespawnAllUsers(this);
             }
+
+            IsActive = false;
+        }
+
+        public override bool GetRespawnTransform(RoR2.CharacterBody body, out Transform outRespawnTransform)
+        {
+            Transform respawnTransform = new GameObject().transform;
+            respawnTransform.position = RespawnPosition.GetSpawnPositionAroundTeleporter(body, 0.5f, 3);
+
+            if (respawnTransform.position != Vector3.zero)
+            {
+                outRespawnTransform = respawnTransform;
+                return true;
+            }
+
+            Debug.Log($"GetRespawnTransform: Failed to find better respawn position for '{GetRespawnType()}' respawn type");
+            outRespawnTransform = null;
+            return false;
         }
     }
 }

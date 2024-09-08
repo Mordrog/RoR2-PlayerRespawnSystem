@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
     public static class PluginConfig
     {

@@ -2,15 +2,14 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
-    class DeathTimerController : NetworkBehaviour
+    class UIDeathTimerController : NetworkBehaviour
     {
-        private DeathTimerPanel deathTimerPanel;
+        private UIDeathTimerPanel deathTimerPanel;
 
-        public readonly int UpdateTimersEveryXFrames = 5;
-
-        private int frameCount = 0;
+        public readonly float UpdateUIEveryXSeconds = 0.5f;
+        private float deltaCount = 0.0f;
 
         public void Awake()
         {
@@ -32,25 +31,25 @@ namespace Mordrog
             deathTimerGameobject.transform.SetParent(self.mainContainer.transform);
             deathTimerGameobject.transform.SetAsFirstSibling();
 
-            deathTimerPanel = deathTimerGameobject.AddComponent<DeathTimerPanel>();
+            deathTimerPanel = deathTimerGameobject.AddComponent<UIDeathTimerPanel>();
         }
 
         private void Run_OnDestroy(On.RoR2.Run.orig_OnDestroy orig, RoR2.Run self)
         {
             orig(self);
 
-            deathTimerPanel = null;
+            Destroy(deathTimerPanel);
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
             if (NetworkServer.active && hasAuthority)
             {
-                frameCount++;
-                if (frameCount >= UpdateTimersEveryXFrames)
+                deltaCount += Time.deltaTime;
+                if (deltaCount >= UpdateUIEveryXSeconds)
                 {
                     CmdUpdateAllDeathTimers();
-                    frameCount = 0;
+                    deltaCount = 0.0f;
                 }
             }
         }
@@ -58,42 +57,59 @@ namespace Mordrog
         [Command]
         public void CmdUpdateAllDeathTimers()
         {
-            if (UsersRespawnController.instance)
+            if (PlayerRespawnSystem.instance)
             {
-                foreach (var user in NetworkUser.readOnlyInstancesList)
-                {
-                    if (UsersRespawnController.instance.usersTimedRespawn.readOnlyInstances.TryGetValue(user.id, out var userTimer))
-                    {
-                        float respawnTime = userTimer.TimeRemaining;
-                        bool canTimedRespawn = UsersRespawnController.instance.CheckIfCanTimedRespawn(user?.master);
-                        bool canRespawnAfter = UsersRespawnController.instance.CheckIfCanRespawn(user?.master) && UsersRespawnController.instance.IsTimedRespawnBlocked;
-                        RespawnType respawnType = UsersRespawnController.instance.RespawnType;
+                RespawnType activeRespawnType = RespawnType.Timed;
+                TimedRespawnController timedRespawnController = null;
 
-                        TargetUpdateDeathTimer(user.connectionToClient, respawnTime, canTimedRespawn, canRespawnAfter, respawnType);
+                foreach (var (respawnType, respawnController) in PlayerRespawnSystem.instance.RespawnControllers)
+                {
+                    if (respawnController is TimedRespawnController)
+                    {
+                        timedRespawnController = respawnController as TimedRespawnController;
+                    }
+                    else if (respawnController.IsActive)
+                    {
+                        activeRespawnType = respawnType;
+                    }
+                }
+
+                if (timedRespawnController)
+                {
+                    foreach (var user in NetworkUser.readOnlyInstancesList)
+                    {
+                        if (timedRespawnController.UserRespawnTimers.TryGetValue(user.id, out var userTimer))
+                        {
+                            float respawnTime = userTimer.TimeRemaining;
+                            bool canRespawn = PlayerRespawnSystem.instance.CheckIfUserCanBeRespawned(user);
+                            bool canTimedRespawn = canRespawn && timedRespawnController.IsActive;
+
+                            TargetUpdateDeathTimer(user.connectionToClient, respawnTime, canRespawn, canTimedRespawn, activeRespawnType);
+                        }
                     }
                 }
             }
         }
 
         [TargetRpc]
-        public void TargetUpdateDeathTimer(NetworkConnection target, float respawnTime, bool canTimedRespawn, bool canRespawnAfter, RespawnType respawnType)
+        public void TargetUpdateDeathTimer(NetworkConnection target, float respawnTime, bool canRespawn, bool canTimedRespawn, RespawnType activeRespawnType)
         {
-            if (deathTimerPanel && PluginConfig.UseDeathTimerUI.Value)
+            if (!deathTimerPanel || !PluginConfig.UseDeathTimerUI.Value)
+            {
+                return;
+            }
+
+            if (canRespawn)
             {
                 if (canTimedRespawn)
                 {
-                    deathTimerPanel.show = true;
-
                     deathTimerPanel.textContext2.text = $"in <color=red>{Mathf.CeilToInt(respawnTime)}</color> seconds";
+                    deathTimerPanel.show = true;
                 }
-                else if (canRespawnAfter)
+                else
                 {
-                    switch (respawnType)
+                    switch (activeRespawnType)
                     {
-                        case RespawnType.Default:
-                            deathTimerPanel.show = false;
-                            break;
-
                         case RespawnType.Teleporter:
                             if (PluginConfig.RespawnOnTPEnd.Value)
                             {
@@ -117,12 +133,15 @@ namespace Mordrog
                                 deathTimerPanel.show = true;
                             }
                             break;
+                        default:
+                            deathTimerPanel.show = false;
+                            break;
                     }
                 }
-                else
-                {
-                    deathTimerPanel.show = false;
-                }
+            }
+            else
+            {
+                deathTimerPanel.show = false;
             }
         }
     }

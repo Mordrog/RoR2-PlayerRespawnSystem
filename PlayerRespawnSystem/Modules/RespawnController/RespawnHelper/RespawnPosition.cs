@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
     static class RespawnPosition
     {

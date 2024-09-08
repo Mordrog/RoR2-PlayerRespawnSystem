@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mordrog
+namespace PlayerRespawnSystem
 {
-    class DeathTimerPanel : MonoBehaviour
+    class UIDeathTimerPanel : MonoBehaviour
     {
         public RectTransform rectTransform;
         public RectTransform colorRectTransform;
@@ -62,8 +62,6 @@ namespace Mordrog
             textContext2.alignment = TMPro.TextAlignmentOptions.Midline;
             textContext2.text = "in x seconds";
         }
-
-        
 
         public void OnEnable()
         {
