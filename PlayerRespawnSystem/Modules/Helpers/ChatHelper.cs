@@ -44,6 +44,12 @@
             RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = message });
         }
 
+        public static void UserWillRespawnAfterFalseSonFight(string userName)
+        {
+            var message = $"<color=#{GreenColor}>{userName}</color> <color=#{GrayColor}>will respawn after false son fight</color>";
+            RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = message });
+        }
+
         public static void UserWillRespawnAfter(string userName, uint respawnTime)
         {
             var message = $"<color=#{GreenColor}>{userName}</color> <color=#{GrayColor}>will respawn in {respawnTime} seconds</color>";

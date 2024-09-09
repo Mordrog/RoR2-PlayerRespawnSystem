@@ -32,6 +32,9 @@ namespace PlayerRespawnSystem
             RespawnOnArtifactTrialEnd,
             BlockTimedRespawnOnVoidlingFight,
             RespawnOnVoidlingStart,
-            RespawnOnVoidlingEnd;
+            RespawnOnVoidlingEnd,
+            BlockTimedRespawnOnFalseSonFight,
+            RespawnOnFalseSonStart,
+            RespawnOnFalseSonEnd;
     }
 }

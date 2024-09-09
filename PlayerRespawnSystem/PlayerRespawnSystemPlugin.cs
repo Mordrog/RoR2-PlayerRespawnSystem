@@ -94,7 +94,7 @@ namespace PlayerRespawnSystem
             PluginConfig.IgnoredMapsForTimedRespawn = Config.Bind<string>(
                 "Settings",
                 "IgnoredMapsForTimedRespawn",
-                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid",
+                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid,meridian",
                 "Maps on which respawning is ignored."
             );
 
@@ -243,6 +243,27 @@ namespace PlayerRespawnSystem
                 "RespawnOnVoidlingEnd",
                 true,
                 "Should players be respawned on end of Voidling fight (regardless of BlockTimedRespawnOnVoidlingFight or map being ignored)."
+            );
+
+            PluginConfig.BlockTimedRespawnOnFalseSonFight = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnFalseSonFight",
+                true,
+                "Should players be blocked from respawning after False Son fight is started."
+            );
+
+            PluginConfig.RespawnOnFalseSonStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnFalseSonStart",
+                false,
+                "Should players be respawned on start of False Son fight (regardless of BlockTimedRespawnOnFalseSonFight or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnFalseSonEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnFalseSonEnd",
+                true,
+                "Should players be respawned on end of False Son fight (regardless of BlockTimedRespawnOnFalseSonFight or map being ignored)."
             );
         }
     }

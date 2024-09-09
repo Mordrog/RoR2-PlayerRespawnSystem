@@ -13,7 +13,8 @@ namespace PlayerRespawnSystem
         Teleporter,
         Mithrix,
         Artifact,
-        Voidling
+        Voidling,
+        FalseSon
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]

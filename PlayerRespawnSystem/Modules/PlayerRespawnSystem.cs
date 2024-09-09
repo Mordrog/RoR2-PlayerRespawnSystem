@@ -1,6 +1,5 @@
 ﻿using RoR2;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Networking;
 
 namespace PlayerRespawnSystem
@@ -104,6 +103,10 @@ namespace PlayerRespawnSystem
                 if (respawnControllers[RespawnType.Voidling].IsActive && PluginConfig.RespawnOnVoidlingEnd.Value)
                 {
                     ChatHelper.UserWillRespawnAfterVoidlingFight(user.userName);
+                }
+                if (respawnControllers[RespawnType.FalseSon].IsActive && PluginConfig.RespawnOnFalseSonEnd.Value)
+                {
+                    ChatHelper.UserWillRespawnAfterFalseSonFight(user.userName);
                 }
             }
         }

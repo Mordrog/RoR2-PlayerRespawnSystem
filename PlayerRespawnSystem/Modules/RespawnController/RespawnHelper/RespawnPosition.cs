@@ -1,5 +1,4 @@
-﻿using R2API.Utils;
-using System.Reflection;
+﻿using System.Reflection;
 using UnityEngine;
 
 namespace PlayerRespawnSystem
@@ -82,6 +81,11 @@ namespace PlayerRespawnSystem
             }
 
             return currentDonut.returnPoint.position;
+        }
+
+        public static Vector3 GetSpawnPositionForStormBoss()
+        {
+            return RoR2.MeridianEventTriggerInteraction.instance.sceneBoundsNew.transform.position;
         }
 
         private static Vector3 GetRandomPositionInCircle(float minRadius, float maxRadius)
