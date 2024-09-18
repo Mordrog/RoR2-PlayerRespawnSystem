@@ -39,10 +39,13 @@ namespace PlayerRespawnSystem
             IsActive = false;
         }
 
-        public void ResumeAllRespawnTimers()
+        public void ResumeAllRespawnTimers(bool forceResume = false)
         {
-            userRespawnTimers.ResumeTimers();
-            IsActive = true;
+            if (forceResume || !CheckIfCurrentStageIsIgnoredForTimedRespawn())
+            {
+                userRespawnTimers.ResumeTimers();
+                IsActive = true;
+            }
         }
 
         public void ResetAllRespawnTimers()
@@ -149,6 +152,8 @@ namespace PlayerRespawnSystem
         {
             orig(self, sceneName);
 
+            ResetAllRespawnTimers();
+            ResumeAllRespawnTimers();
             if (CheckIfCurrentStageIsIgnoredForTimedRespawn())
             {
                 StopAllRespawnTimers();
