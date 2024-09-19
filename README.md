@@ -11,33 +11,45 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 **This feature is client dependent** meaning, clients will only have this panel shown if they have mod.
 
 ### Default Config Settings
-| Setting                                               | Default Value                                                                   |
-| :-------------------------------------                | :-----------------------------------------------------------------------------: |
-| IgnoredMapsForTimedRespawn                            |           "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo" |
-| IgnoredGameModes                                      |                                                              "IgnoredGameModes" |
-| RespawnTimeType                                       |                                                            StageTimeBased        |
-| StartingRespawnTime                                   |                                                                        30        |
-| MaxRespawnTime                                        |                                                                       180        |
-| UpdateCurrentRepsawnTimeByXSeconds                    |                                                                         5        |
-| UpdateCurrentRespawnTimeEveryXSeconds                 |                                                                        10        |
-| UsePodsOnStartOfMatch                                 |                                                                     false        |
-| UseDeathTimerUI                                       |                                                                      true        |
-| UseTimedRespawn                                       |                                                                      true        |
-| BlockTimedRespawnOnTPEvent                            |                                                                      true        |
-| RespawnOnTPStart                                      |                                                                      true        |
-| RespawnOnTPEnd                                        |                                                                      true        |
-| BlockTimedRespawnOnMithrixFight                       |                                                                      true        |
-| RespawnOnMithrixStart                                 |                                                                      true        |
-| RespawnOnMithrixEnd                                   |                                                                     false        |
-| BlockTimedRespawnOnArtifactTrial                      |                                                                      true        |
-| RespawnOnArtifactTrialStart                           |                                                                      true        |
-| RespawnOnArtifactTrialEnd                             |                                                                      true        |
+| Setting                                               | Default Value                                                                           |
+| :-------------------------------------                | :-------------------------------------------------------------------------------------: |
+| IgnoredMapsForTimedRespawn                            | "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid,meridian" |
+| IgnoredGameModes                                      |                                                                      "InfiniteTowerRun" |
+| RespawnTimeType                                       |                                                                          StageTimeBased |
+| StartingRespawnTime                                   |                                                                                      30 |
+| MaxRespawnTime                                        |                                                                                     180 |
+| UpdateCurrentRepsawnTimeByXSeconds                    |                                                                                       5 |
+| UpdateCurrentRespawnTimeEveryXSeconds                 |                                                                                      10 |
+| UsePodsOnStartOfMatch                                 |                                                                                   false |
+| UseDeathTimerUI                                       |                                                                                    true |
+| UseTimedRespawn                                       |                                                                                    true |
+| BlockTimedRespawnOnTPEvent                            |                                                                                    true |
+| RespawnOnTPStart                                      |                                                                                    true |
+| RespawnOnTPEnd                                        |                                                                                    true |
+| BlockTimedRespawnOnMithrixFight                       |                                                                                    true |
+| RespawnOnMithrixStart                                 |                                                                                    true |
+| RespawnOnMithrixEnd                                   |                                                                                   false |
+| BlockTimedRespawnOnArtifactTrial                      |                                                                                    true |
+| RespawnOnArtifactTrialStart                           |                                                                                    true |
+| RespawnOnArtifactTrialEnd                             |                                                                                    true |
+| BlockTimedRespawnOnVoidlingFight                      |                                                                                    true |
+| RespawnOnVoidlingStart                                |                                                                                    true |
+| RespawnOnVoidlingEnd                                  |                                                                                    true |
+| BlockTimedRespawnOnFalseSonFight                      |                                                                                    true |
+| RespawnOnFalseSonStart                                |                                                                                   false |
+| RespawnOnFalseSonEnd                                  |                                                                                    true |
 
 ## More
 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.1.0
+- Fix for Seekers of the Storm changes
+- Added respawn handling for Voidling boss
+- Added respawn handling for False Son boss
+- Added Voidling and False Son maps to ignored Stages for timed respawn
+
 #### 2.0.4
 - Update manifest + rebuild on new patch
 

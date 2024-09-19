@@ -1,10 +1,11 @@
 {
     "name": "PlayerRespawnSystem",
-    "version_number": "2.0.4",
+    "version_number": "2.1.0",
     "website_url": "https://github.com/Mordrog/RoR2-PlayerRespawnSystem",
     "description": "The mod should provide customizable players respawn system for your games.",
     "dependencies": [
-        "bbepis-BepInExPack-5.4.1903",
-        "tristanmcpherson-R2API-4.3.5"
+        "bbepis-BepInExPack-5.4.2117",
+        "RiskofThunder-R2API_Core-5.1.2",
+		"RiskofThunder-R2API_Prefab-1.0.4"
     ]
 }
