@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -174,6 +175,24 @@ namespace PlayerRespawnSystem
         private bool CheckIfCurrentStageIsIgnoredForTimedRespawn()
         {
             return PluginConfig.IgnoredMapsForTimedRespawn.Value.Contains(SceneCatalog.GetSceneDefForCurrentScene().baseSceneName);
+        }
+
+        public override bool GetRespawnTransform(RoR2.CharacterBody body, out Transform outRespawnTransform)
+        {
+            foreach(RespawnType respawnType in Enum.GetValues(typeof(RespawnType)))
+            {
+                if (respawnType == RespawnType.Timed)
+                {
+                    continue;
+                }
+
+                if (PlayerRespawnSystem.instance.RespawnControllers.TryGetValue(respawnType, out RespawnController respawnController) && respawnController.IsActive)
+                {
+                    return respawnController.GetRespawnTransform(body, out outRespawnTransform);
+                }
+            }
+
+            return base.GetRespawnTransform(body, out outRespawnTransform);
         }
     }
 }
