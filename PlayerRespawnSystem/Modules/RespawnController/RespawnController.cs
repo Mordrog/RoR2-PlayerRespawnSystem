@@ -39,7 +39,19 @@ namespace PlayerRespawnSystem
 
     abstract class RespawnController : NetworkBehaviour, IRespawnController
     {
-        public virtual bool IsActive { get; protected set; } = false;
+        private bool isActive = false;
+        public bool IsActive
+        {
+            get { return isActive; }
+            protected set 
+            {
+                if (isActive != value)
+                {
+                    UnityEngine.Debug.Log($"PlayerRespawnSystem: " + (value ? "Activating" : "Deactivating") + $" {GetRespawnType()} respawn controller");
+                    isActive = value;
+                }
+            } 
+        }
 
         protected PlayerRespawner playerRespawner;
 

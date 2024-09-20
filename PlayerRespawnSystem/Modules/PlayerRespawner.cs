@@ -23,6 +23,7 @@ namespace PlayerRespawnSystem
 
                     if (body)
                     {
+                        UnityEngine.Debug.Log($"PlayerRespawnSystem: Issuing {respawnController.GetRespawnType()} respawn");
                         respawnQueue.Enqueue(new Tuple<RespawnController, CharacterBody>(respawnController, body));
                         Stage.instance.RespawnCharacter(user.master);
                     }
@@ -90,10 +91,13 @@ namespace PlayerRespawnSystem
                 var (respawnController, body) = respawnQueue.Dequeue();
                 if (respawnController && body)
                 {
+                    UnityEngine.Debug.Log($"PlayerRespawnSystem: Getting respawn position for {respawnController.GetRespawnType()} respawn");
                     if (respawnController.GetRespawnTransform(body, out Transform respawnTransform))
                     {
+                        UnityEngine.Debug.Log($"PlayerRespawnSystem: Found respawn position at {respawnTransform.position}");
                         return respawnTransform;
                     }
+                    UnityEngine.Debug.Log($"PlayerRespawnSystem: Failed to find respawn position, using default");
                 }
             }
 

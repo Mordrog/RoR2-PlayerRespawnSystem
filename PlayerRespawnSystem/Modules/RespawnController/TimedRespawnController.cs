@@ -188,10 +188,12 @@ namespace PlayerRespawnSystem
 
                 if (PlayerRespawnSystem.instance.RespawnControllers.TryGetValue(respawnType, out RespawnController respawnController) && respawnController.IsActive)
                 {
+                    UnityEngine.Debug.Log($"PlayerRespawnSystem: Timed respawn using {respawnController.GetRespawnType()} respawn position");
                     return respawnController.GetRespawnTransform(body, out outRespawnTransform);
                 }
             }
 
+            UnityEngine.Debug.Log($"PlayerRespawnSystem: Timed respawn using default respawn position");
             return base.GetRespawnTransform(body, out outRespawnTransform);
         }
     }
