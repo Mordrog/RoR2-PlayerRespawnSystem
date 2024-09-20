@@ -5,6 +5,8 @@ namespace PlayerRespawnSystem
     [AssociatedRespawnType(RespawnType.Voidling)]
     class VoidlingRespawnController : RespawnController
     {
+        public static new bool IsEnabled => true;
+
         public void Awake()
         {
             On.RoR2.ScriptedCombatEncounter.BeginEncounter += ScriptedCombatEncounter_BeginEncounter;

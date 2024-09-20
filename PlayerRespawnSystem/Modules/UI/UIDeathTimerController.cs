@@ -57,7 +57,7 @@ namespace PlayerRespawnSystem
         [Command]
         public void CmdUpdateAllDeathTimers()
         {
-            if (PlayerRespawnSystem.instance)
+            if (PlayerRespawnSystem.instance && PlayerRespawnSystem.instance.RespawnControllers.ContainsKey(RespawnType.Timed))
             {
                 RespawnType activeRespawnType = RespawnType.Timed;
                 TimedRespawnController timedRespawnController = null;

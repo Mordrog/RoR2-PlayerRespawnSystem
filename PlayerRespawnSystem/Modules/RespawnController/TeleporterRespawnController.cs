@@ -5,6 +5,8 @@ namespace PlayerRespawnSystem
     [AssociatedRespawnType(RespawnType.Teleporter)]
     class TeleporterRespawnController : RespawnController
     {
+        public static new bool IsEnabled => true;
+
         public void Awake()
         {
             On.RoR2.TeleporterInteraction.ChargingState.OnEnter += TeleporterInteraction_ChargingState_OnEnter;

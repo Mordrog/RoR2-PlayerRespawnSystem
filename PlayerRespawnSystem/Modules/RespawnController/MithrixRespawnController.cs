@@ -5,6 +5,8 @@ namespace PlayerRespawnSystem
     [AssociatedRespawnType(RespawnType.Mithrix)]
     class MithrixRespawnController : RespawnController
     {
+        public static new bool IsEnabled => true;
+
         public void Awake()
         {
             On.EntityStates.Missions.BrotherEncounter.Phase1.OnEnter += BrotherEncounter_Phase1_OnEnter;

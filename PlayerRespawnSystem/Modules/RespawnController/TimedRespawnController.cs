@@ -7,6 +7,8 @@ namespace PlayerRespawnSystem
     [AssociatedRespawnType(RespawnType.Timed)]
     class TimedRespawnController : RespawnController
     {
+        public static new bool IsEnabled => PluginConfig.UseTimedRespawn.Value;
+
         private MultiUserTimers userRespawnTimers;
 
         public IReadOnlyDictionary<NetworkUserId, UserTimer> UserRespawnTimers => userRespawnTimers.UserTimers;

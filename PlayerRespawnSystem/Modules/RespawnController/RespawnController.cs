@@ -65,6 +65,13 @@ namespace PlayerRespawnSystem
         protected void RequestTimedRespawnBlock() { OnRequestTimedRespawnBlock?.Invoke(); }
         protected void RequestTimedRespawnUnblock() { OnRequestTimedRespawnUnblock?.Invoke(); }
 
+        // LOL, no virtual static before .Net6 https://learn.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/6.0/static-abstract-interface-methods
+        public static bool IsEnabled(Type type)
+        {
+            var property = type.GetProperty("IsEnabled", BindingFlags.Static | BindingFlags.Public);
+            return (bool)property.GetValue(null);
+        }
+
         public static Dictionary<RespawnType, Type> GetRespawnControllerTypes()
         {
             Dictionary<RespawnType, Type> respawnControllers = new Dictionary<RespawnType, Type>();

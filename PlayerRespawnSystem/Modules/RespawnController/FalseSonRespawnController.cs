@@ -5,6 +5,8 @@ namespace PlayerRespawnSystem
     [AssociatedRespawnType(RespawnType.FalseSon)]
     class FalseSonRespawnController : RespawnController
     {
+        public static new bool IsEnabled => true;
+
         public void Awake()
         {
             On.RoR2.MeridianEventTriggerInteraction.MeridianEventStart.OnEnter += MeridianEventStart_OnEnter;

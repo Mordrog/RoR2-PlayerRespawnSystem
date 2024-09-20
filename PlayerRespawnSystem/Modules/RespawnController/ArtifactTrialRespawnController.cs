@@ -3,6 +3,8 @@
     [AssociatedRespawnType(RespawnType.Artifact)]
     class ArtifactTrialRespawnController : RespawnController
     {
+        public static new bool IsEnabled => true;
+
         public void Awake()
         {
             On.RoR2.ArtifactTrialMissionController.CombatState.OnEnter += ArtifactTrialMissionController_CombatState_OnEnter;
