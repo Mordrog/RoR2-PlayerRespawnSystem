@@ -33,7 +33,10 @@ namespace PlayerRespawnSystem
             if (PluginConfig.BlockTimedRespawnOnTPEvent.Value)
             {
                 RequestTimedRespawnBlock();
-                ChatHelper.RespawnBlockedOnTPEvent();
+                if (PluginConfig.UseTimedRespawn.Value)
+                {
+                    ChatHelper.RespawnBlockedOnTPEvent();
+                }
             }
         }
 
