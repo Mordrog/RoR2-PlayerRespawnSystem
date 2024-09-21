@@ -44,6 +44,11 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.1.1
+- Fix UseTimedRespawn setting not working when set to false
+- Fix timed respawn not using updated respawn position on events
+- Fix timed respawn being blocked on tp event message being show when timed respawn is disabled
+
 #### 2.1.0
 - Fix for Seekers of the Storm changes
 - Added respawn handling for Voidling boss
