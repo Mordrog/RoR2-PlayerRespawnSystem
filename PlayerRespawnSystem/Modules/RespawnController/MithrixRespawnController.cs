@@ -11,12 +11,14 @@ namespace PlayerRespawnSystem
         {
             On.EntityStates.Missions.BrotherEncounter.Phase1.OnEnter += BrotherEncounter_Phase1_OnEnter;
             On.EntityStates.Missions.BrotherEncounter.EncounterFinished.OnEnter += BrotherEncounter_EncounterFinished_OnEnter;
+            On.RoR2.Run.AdvanceStage += Run_AdvanceStage;
         }
 
         public void OnDestroy()
         {
             On.EntityStates.Missions.BrotherEncounter.Phase1.OnEnter -= BrotherEncounter_Phase1_OnEnter;
             On.EntityStates.Missions.BrotherEncounter.EncounterFinished.OnEnter -= BrotherEncounter_EncounterFinished_OnEnter;
+            On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
         private void BrotherEncounter_Phase1_OnEnter(On.EntityStates.Missions.BrotherEncounter.Phase1.orig_OnEnter orig, EntityStates.Missions.BrotherEncounter.Phase1 self)
@@ -50,6 +52,12 @@ namespace PlayerRespawnSystem
                 playerRespawner.RespawnAllUsers(this);
             }
 
+            IsActive = false;
+        }
+
+        private void Run_AdvanceStage(On.RoR2.Run.orig_AdvanceStage orig, RoR2.Run self, RoR2.SceneDef nextScene)
+        {
+            orig(self, nextScene);
             IsActive = false;
         }
 

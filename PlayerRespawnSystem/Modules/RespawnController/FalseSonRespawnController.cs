@@ -11,12 +11,14 @@ namespace PlayerRespawnSystem
         {
             On.RoR2.MeridianEventTriggerInteraction.MeridianEventStart.OnEnter += MeridianEventStart_OnEnter;
             On.RoR2.MeridianEventTriggerInteraction.MeridianEventCleared.OnEnter += MeridianEventCleared_OnEnter;
+            On.RoR2.Run.AdvanceStage += Run_AdvanceStage;
         }
 
         public void OnDestroy()
         {
             On.RoR2.MeridianEventTriggerInteraction.MeridianEventStart.OnEnter -= MeridianEventStart_OnEnter;
             On.RoR2.MeridianEventTriggerInteraction.MeridianEventCleared.OnEnter -= MeridianEventCleared_OnEnter;
+            On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
         private void MeridianEventStart_OnEnter(On.RoR2.MeridianEventTriggerInteraction.MeridianEventStart.orig_OnEnter orig, RoR2.MeridianEventTriggerInteraction.MeridianEventStart self)
@@ -50,6 +52,12 @@ namespace PlayerRespawnSystem
                 playerRespawner.RespawnAllUsers(this);
             }
 
+            IsActive = false;
+        }
+
+        private void Run_AdvanceStage(On.RoR2.Run.orig_AdvanceStage orig, RoR2.Run self, RoR2.SceneDef nextScene)
+        {
+            orig(self, nextScene);
             IsActive = false;
         }
 

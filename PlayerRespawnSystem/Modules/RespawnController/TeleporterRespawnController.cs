@@ -11,12 +11,14 @@ namespace PlayerRespawnSystem
         {
             On.RoR2.TeleporterInteraction.ChargingState.OnEnter += TeleporterInteraction_ChargingState_OnEnter;
             On.RoR2.TeleporterInteraction.ChargedState.OnEnter += TeleporterInteraction_ChargedState_OnEnter;
+            On.RoR2.Run.AdvanceStage += Run_AdvanceStage;
         }
 
         public void OnDestroy()
         {
             On.RoR2.TeleporterInteraction.ChargingState.OnEnter -= TeleporterInteraction_ChargingState_OnEnter;
             On.RoR2.TeleporterInteraction.ChargedState.OnEnter -= TeleporterInteraction_ChargedState_OnEnter;
+            On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
         private void TeleporterInteraction_ChargingState_OnEnter(On.RoR2.TeleporterInteraction.ChargingState.orig_OnEnter orig, EntityStates.BaseState self)
@@ -54,6 +56,12 @@ namespace PlayerRespawnSystem
                 playerRespawner.RespawnAllUsers(this);
             }
 
+            IsActive = false;
+        }
+
+        private void Run_AdvanceStage(On.RoR2.Run.orig_AdvanceStage orig, RoR2.Run self, RoR2.SceneDef nextScene)
+        {
+            orig(self, nextScene);
             IsActive = false;
         }
 

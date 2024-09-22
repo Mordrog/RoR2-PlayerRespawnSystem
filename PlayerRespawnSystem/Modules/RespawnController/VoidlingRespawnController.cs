@@ -11,12 +11,14 @@ namespace PlayerRespawnSystem
         {
             On.RoR2.ScriptedCombatEncounter.BeginEncounter += ScriptedCombatEncounter_BeginEncounter;
             On.RoR2.VoidRaidGauntletController.SpawnOutroPortal += VoidRaidGauntletController_SpawnOutroPortal;
+            On.RoR2.Run.AdvanceStage += Run_AdvanceStage;
         }
 
         public void OnDestroy()
         {
             On.RoR2.ScriptedCombatEncounter.BeginEncounter -= ScriptedCombatEncounter_BeginEncounter;
             On.RoR2.VoidRaidGauntletController.SpawnOutroPortal -= VoidRaidGauntletController_SpawnOutroPortal;
+            On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
         private void ScriptedCombatEncounter_BeginEncounter(On.RoR2.ScriptedCombatEncounter.orig_BeginEncounter orig, RoR2.ScriptedCombatEncounter self)
@@ -54,6 +56,12 @@ namespace PlayerRespawnSystem
                 playerRespawner.RespawnAllUsers(this);
             }
 
+            IsActive = false;
+        }
+
+        private void Run_AdvanceStage(On.RoR2.Run.orig_AdvanceStage orig, RoR2.Run self, RoR2.SceneDef nextScene)
+        {
+            orig(self, nextScene);
             IsActive = false;
         }
 
