@@ -44,6 +44,9 @@ Mod should now add new Death Timer panel when you die, so you will know exactly 
 Find my other mods here: https://thunderstore.io/package/Mordrog/
 
 ### Changelog
+#### 2.1.2
+- Make event respawns always getting deactivated on stage being advanced
+
 #### 2.1.1
 - Fix UseTimedRespawn setting not working when set to false
 - Fix timed respawn not using updated respawn position on events
