@@ -19,7 +19,7 @@
             On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
-        private void ArtifactTrialMissionController_CombatState_OnEnter(On.RoR2.ArtifactTrialMissionController.CombatState.orig_OnEnter orig, EntityStates.EntityState self)
+        private void ArtifactTrialMissionController_CombatState_OnEnter(On.RoR2.ArtifactTrialMissionController.CombatState.orig_OnEnter orig, RoR2.ArtifactTrialMissionController.CombatState self)
         {
             orig(self);
 
@@ -36,7 +36,7 @@
             }
         }
 
-        private void CombatState_OnExit(On.RoR2.ArtifactTrialMissionController.CombatState.orig_OnExit orig, EntityStates.EntityState self)
+        private void CombatState_OnExit(On.RoR2.ArtifactTrialMissionController.CombatState.orig_OnExit orig, RoR2.ArtifactTrialMissionController.CombatState self)
         {
             orig(self);
 

@@ -11,100 +11,18 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="BepInEx.Preloader">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\BepInEx.Preloader.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="MMHOOK_RoR2">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\MMHOOK\MMHOOK_RoR2.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.dll">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\core\MonoMod.Utils.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Unity.Addressables">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Unity.Addressables.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-	<Reference Include="R2API.Core">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\RiskofThunder-R2API_Core\R2API.Core\R2API.Core.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-	<Reference Include="R2API.Prefab">
-      <HintPath>C:\Users\Mordrog\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Mordrog\BepInEx\plugins\RiskofThunder-R2API_Prefab\R2API.Prefab\R2API.Prefab.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.dll</HintPath>
-	  <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="RoR2">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\RoR2.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
+		<PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
+		<PackageReference Include="R2API.Prefab" Version="1.0.*" />
+		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" />
+		<PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.0.0-r.0" />
+		<PackageReference Include="MMHOOK.RoR2" Version="2025.11.19" NoWarn="NU1701" />
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

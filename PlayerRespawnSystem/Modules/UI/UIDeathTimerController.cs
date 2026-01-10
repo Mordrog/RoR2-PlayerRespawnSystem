@@ -113,7 +113,7 @@ namespace PlayerRespawnSystem
                         case RespawnType.Teleporter:
                             if (PluginConfig.RespawnOnTPEnd.Value)
                             {
-                                deathTimerPanel.textContext2.text = $"after <color=red>teleporter</color> event";
+                                deathTimerPanel.textContext2.text = $"after <color=red>Teleporter</color> event";
                                 deathTimerPanel.show = true;
                             }
                             break;
@@ -129,7 +129,21 @@ namespace PlayerRespawnSystem
                         case RespawnType.Artifact:
                             if (PluginConfig.RespawnOnArtifactTrialEnd.Value)
                             {
-                                deathTimerPanel.textContext2.text = $"after <color=red>artifact trial</color> ends";
+                                deathTimerPanel.textContext2.text = $"after <color=red>Artifact Trial</color> ends";
+                                deathTimerPanel.show = true;
+                            }
+                            break;
+                        case RespawnType.Voidling:
+                            if (PluginConfig.RespawnOnVoidlingEnd.Value)
+                            {
+                                deathTimerPanel.textContext2.text = $"after <color=red>Voidling</color> fight";
+                                deathTimerPanel.show = true;
+                            }
+                            break;
+                        case RespawnType.FalseSon:
+                            if (PluginConfig.RespawnOnFalseSonEnd.Value)
+                            {
+                                deathTimerPanel.textContext2.text = $"after <color=red>False Son</color> fight";
                                 deathTimerPanel.show = true;
                             }
                             break;

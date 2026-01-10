@@ -113,6 +113,10 @@ namespace PlayerRespawnSystem
                     {
                         ChatHelper.UserWillRespawnAfterMithrixFight(user.userName);
                     }
+                    if (IsRespawnControllerEnabledAndActive(RespawnType.Artifact) && PluginConfig.RespawnOnArtifactTrialEnd.Value)
+                    {
+                        ChatHelper.UserWillRespawnAfterArtifactTrial(user.userName);
+                    }
                     if (IsRespawnControllerEnabledAndActive(RespawnType.Voidling) && PluginConfig.RespawnOnVoidlingEnd.Value)
                     {
                         ChatHelper.UserWillRespawnAfterVoidlingFight(user.userName);

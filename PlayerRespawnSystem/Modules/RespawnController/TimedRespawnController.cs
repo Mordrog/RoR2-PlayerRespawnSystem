@@ -69,7 +69,7 @@ namespace PlayerRespawnSystem
             On.RoR2.Run.OnDestroy += Run_OnDestroy;
 
             On.RoR2.PlayerCharacterMasterController.OnBodyDeath += PlayerCharacterMasterController_OnBodyDeath;
-            On.RoR2.CharacterMaster.Respawn += CharacterMaster_Respawn;
+            On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool += CharacterMaster_Respawn;
             On.RoR2.Run.OnServerSceneChanged += Run_OnServerSceneChanged;
             On.RoR2.Stage.BeginAdvanceStage += Stage_BeginAdvanceStage;
         }
@@ -86,7 +86,7 @@ namespace PlayerRespawnSystem
             On.RoR2.Run.OnDestroy -= Run_OnDestroy;
 
             On.RoR2.PlayerCharacterMasterController.OnBodyDeath -= PlayerCharacterMasterController_OnBodyDeath;
-            On.RoR2.CharacterMaster.Respawn -= CharacterMaster_Respawn;
+            On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool -= CharacterMaster_Respawn;
             On.RoR2.Run.OnServerSceneChanged -= Run_OnServerSceneChanged;
             On.RoR2.Stage.BeginAdvanceStage -= Stage_BeginAdvanceStage;
         }
@@ -140,7 +140,7 @@ namespace PlayerRespawnSystem
             }
         }
 
-        private CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
+        public CharacterBody CharacterMaster_Respawn(On.RoR2.CharacterMaster.orig_Respawn_Vector3_Quaternion_bool orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
         {
             var user = UsersHelper.GetUser(self);
             if (user)

@@ -3,6 +3,9 @@ using R2API;
 using R2API.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Security.Permissions;
+
+[assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 
 namespace PlayerRespawnSystem
 {
@@ -94,7 +97,7 @@ namespace PlayerRespawnSystem
             PluginConfig.IgnoredMapsForTimedRespawn = Config.Bind<string>(
                 "Settings",
                 "IgnoredMapsForTimedRespawn",
-                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid,meridian",
+                "bazaar,arena,goldshores,moon,moon2,artifactworld,mysteryspace,limbo,voidraid,meridian,solusweb,solutionalhaunt",
                 "Maps on which respawning is ignored."
             );
 

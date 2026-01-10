@@ -21,7 +21,7 @@ namespace PlayerRespawnSystem
             On.RoR2.Run.AdvanceStage -= Run_AdvanceStage;
         }
 
-        private void TeleporterInteraction_ChargingState_OnEnter(On.RoR2.TeleporterInteraction.ChargingState.orig_OnEnter orig, EntityStates.BaseState self)
+        private void TeleporterInteraction_ChargingState_OnEnter(On.RoR2.TeleporterInteraction.ChargingState.orig_OnEnter orig, RoR2.TeleporterInteraction.ChargingState self)
         {
             orig(self);
 
@@ -42,7 +42,7 @@ namespace PlayerRespawnSystem
             }
         }
 
-        private void TeleporterInteraction_ChargedState_OnEnter(On.RoR2.TeleporterInteraction.ChargedState.orig_OnEnter orig, EntityStates.BaseState self)
+        private void TeleporterInteraction_ChargedState_OnEnter(On.RoR2.TeleporterInteraction.ChargedState.orig_OnEnter orig, RoR2.TeleporterInteraction.ChargedState self)
         {
             orig(self);
 
