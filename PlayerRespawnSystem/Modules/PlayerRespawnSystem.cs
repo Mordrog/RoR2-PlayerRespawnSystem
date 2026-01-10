@@ -125,6 +125,14 @@ namespace PlayerRespawnSystem
                     {
                         ChatHelper.UserWillRespawnAfterFalseSonFight(user.userName);
                     }
+                    if (IsRespawnControllerEnabledAndActive(RespawnType.SolusWing) && PluginConfig.RespawnOnSolusWingEnd.Value)
+                    {
+                        ChatHelper.UserWillRespawnAfterSolusWingFight(user.userName);
+                    }
+                    if (IsRespawnControllerEnabledAndActive(RespawnType.SolusHeart) && PluginConfig.RespawnOnSolusHeartEnd.Value)
+                    {
+                        ChatHelper.UserWillRespawnAfterSolusHeartFight(user.userName);
+                    }
                 }
             }
         }

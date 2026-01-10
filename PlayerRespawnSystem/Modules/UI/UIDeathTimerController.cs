@@ -147,6 +147,20 @@ namespace PlayerRespawnSystem
                                 deathTimerPanel.show = true;
                             }
                             break;
+                        case RespawnType.SolusWing:
+                            if (PluginConfig.RespawnOnSolusWingEnd.Value)
+                            {
+                                deathTimerPanel.textContext2.text = $"after <color=red>Solus Wing</color> fight";
+                                deathTimerPanel.show = true;
+                            }
+                            break;
+                        case RespawnType.SolusHeart:
+                            if (PluginConfig.RespawnOnSolusHeartEnd.Value)
+                            {
+                                deathTimerPanel.textContext2.text = $"after <color=red>Solus Heart</color> fight";
+                                deathTimerPanel.show = true;
+                            }
+                            break;
                         default:
                             deathTimerPanel.show = false;
                             break;

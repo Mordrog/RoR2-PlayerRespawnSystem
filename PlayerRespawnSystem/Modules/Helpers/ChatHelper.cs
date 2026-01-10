@@ -50,6 +50,18 @@
             RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = message });
         }
 
+        public static void UserWillRespawnAfterSolusWingFight(string userName)
+        {
+            var message = $"<color=#{GreenColor}>{userName}</color> <color=#{GrayColor}>will respawn after solus wing fight</color>";
+            RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = message });
+        }
+
+        public static void UserWillRespawnAfterSolusHeartFight(string userName)
+        {
+            var message = $"<color=#{GreenColor}>{userName}</color> <color=#{GrayColor}>will respawn after solus heart fight</color>";
+            RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = message });
+        }
+
         public static void UserWillRespawnAfter(string userName, uint respawnTime)
         {
             var message = $"<color=#{GreenColor}>{userName}</color> <color=#{GrayColor}>will respawn in {respawnTime} seconds</color>";

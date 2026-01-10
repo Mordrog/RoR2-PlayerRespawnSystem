@@ -268,6 +268,48 @@ namespace PlayerRespawnSystem
                 true,
                 "Should players be respawned on end of False Son fight (regardless of BlockTimedRespawnOnFalseSonFight or map being ignored)."
             );
+
+            PluginConfig.BlockTimedRespawnOnSolusWingFight = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnSolusWingFight",
+                true,
+                "Should players be blocked from respawning after Solus Wing fight is started."
+            );
+
+            PluginConfig.RespawnOnSolusWingStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnSolusWingStart",
+                true,
+                "Should players be respawned on start of Solus Wing fight (regardless of BlockTimedRespawnOnSolusWingFight or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnSolusWingEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnSolusWingEnd",
+                true,
+                "Should players be respawned on end of Solus Wing fight (regardless of BlockTimedRespawnOnSolusWingFight or map being ignored)."
+            );
+
+            PluginConfig.BlockTimedRespawnOnSolusHeartFight = Config.Bind<bool>(
+                "Settings",
+                "BlockTimedRespawnOnSolusHeartFight",
+                true,
+                "Should players be blocked from respawning after Solus Heart fight is started."
+            );
+
+            PluginConfig.RespawnOnSolusHeartStart = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnSolusHeartStart",
+                true,
+                "Should players be respawned on start of Solus Heart fight (regardless of BlockTimedRespawnOnSolusHeartFight or map being ignored)."
+            );
+
+            PluginConfig.RespawnOnSolusHeartEnd = Config.Bind<bool>(
+                "Settings",
+                "RespawnOnSolusHeartEnd",
+                true,
+                "Should players be respawned on end of Solus Heart fight (regardless of BlockTimedRespawnOnSolusHeartFight or map being ignored)."
+            );
         }
     }
 }

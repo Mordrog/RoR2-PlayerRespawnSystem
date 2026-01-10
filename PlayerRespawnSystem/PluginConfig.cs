@@ -35,6 +35,12 @@ namespace PlayerRespawnSystem
             RespawnOnVoidlingEnd,
             BlockTimedRespawnOnFalseSonFight,
             RespawnOnFalseSonStart,
-            RespawnOnFalseSonEnd;
+            RespawnOnFalseSonEnd,
+            BlockTimedRespawnOnSolusWingFight,
+            RespawnOnSolusWingStart,
+            RespawnOnSolusWingEnd,
+            BlockTimedRespawnOnSolusHeartFight,
+            RespawnOnSolusHeartStart,
+            RespawnOnSolusHeartEnd;
     }
 }

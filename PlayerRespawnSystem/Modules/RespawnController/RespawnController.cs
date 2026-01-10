@@ -14,7 +14,9 @@ namespace PlayerRespawnSystem
         Mithrix,
         Artifact,
         Voidling,
-        FalseSon
+        FalseSon,
+        SolusWing,
+        SolusHeart,
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
