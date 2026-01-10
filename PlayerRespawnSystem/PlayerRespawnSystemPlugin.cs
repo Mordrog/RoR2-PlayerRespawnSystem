@@ -14,7 +14,7 @@ namespace PlayerRespawnSystem
     [BepInPlugin(ModGuid, ModName, ModVer)]
     public class PlayerRespawnSystemPlugin : BaseUnityPlugin
     {
-        public const string ModVer = "2.1.2";
+        public const string ModVer = "2.2.0";
         public const string ModName = "PlayerRespawnSystem";
         public const string ModGuid = "com.Mordrog.PlayerRespawnSystem";
 
